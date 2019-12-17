@@ -1,7 +1,6 @@
 package gorest.co.in;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RequestHeader {
     public static Map<String, String> getHeaders(String accessToken) {

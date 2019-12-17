@@ -2,8 +2,7 @@ package gorest.co.in;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RequestBody {
     public static final String WEBSITE = "website";

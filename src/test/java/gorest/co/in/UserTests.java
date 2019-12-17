@@ -39,7 +39,7 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(302);
 
-        printResponse(response);
+        Utils.printResponse(response);
     }
 
     @Test(priority = 2, dependsOnMethods={"postUserTest"})
@@ -57,10 +57,10 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(200);
 
-        String emailFromJson = jsonObject(response)
+        String emailFromJson = Utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0).get(EMAIL).toString();
 
-        String idFromJson = jsonObject(response)
+        String idFromJson = Utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0).get(ID).toString();
 
         user.setId(idFromJson);
@@ -69,7 +69,7 @@ public class UserTests extends BaseTest {
                 .as("Wrong email.")
                 .isEqualTo(user.getEmail());
 
-        printResponse(response);
+        Utils.printResponse(response);
     }
 
     @Test(priority = 3, dependsOnMethods={"postUserTest"})
@@ -84,7 +84,7 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(200);
 
-        printResponse(deleteResponse);
+        Utils.printResponse(deleteResponse);
 
         //Verify User deleted:
 
@@ -100,12 +100,12 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(200);
 
-        JSONArray jsonArray = jsonObject(response).getJSONArray("result");
+        JSONArray jsonArray = Utils.jsonObject(response).getJSONArray("result");
 
         Assertions.assertThat(jsonArray)
                 .as("JSONArray is not empty.")
                 .isEmpty();
 
-        printResponse(response);
+        Utils.printResponse(response);
     }
 }
