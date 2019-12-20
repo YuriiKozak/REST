@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 import static gorest.co.in.RequestBody.*;
 
 public class UserTests extends BaseTest {
+
+    //this does not belong here, please implement it in proper builder pattern
     User user = new User.Builder()
             .setFirstName("John")
             .setLastName("Doe")
@@ -26,6 +28,7 @@ public class UserTests extends BaseTest {
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders(accessToken));
 
+        //are you planning to include this in every test?
         RequestBody requestBody = new RequestBody()
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName())
@@ -39,14 +42,14 @@ public class UserTests extends BaseTest {
 
         Assertions.assertThat(response.getStatusCode())
                 .as("Wrong response status code.")
-                .isEqualTo(302);
+                .isEqualTo(302);//magic number
 
         JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get("_meta");
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get("code"))
                 .as("Wrong response code.")
-                .isEqualTo(201);
+                .isEqualTo(201);//again
         softAssertions.assertThat(jsonObject.get("message"))
                 .as("Wrong response message.")
                 .isEqualTo("A resource was successfully created in response to a POST request. " +
@@ -56,16 +59,16 @@ public class UserTests extends BaseTest {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"postUserTest"})
+    @Test(priority = 2, dependsOnMethods={"postUserTest"})//why is this depending on something?
     public void getUserTest() {
         RestAssured.baseURI = baseURI;
-        RequestSpecification request = RestAssured.given();
+        RequestSpecification request = RestAssured.given();//code duplication
 
         Response response = request
                 .when()
                 .queryParam(ACCESS_TOKEN, accessToken)
                 .queryParam(EMAIL, user.getEmail())
-                .get("/users");
+                .get("/users");//does this belong in test?
 
         Assertions.assertThat(response.getStatusCode())
                 .as("Wrong response status code.")
