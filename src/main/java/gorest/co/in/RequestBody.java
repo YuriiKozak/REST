@@ -24,6 +24,18 @@ public class RequestBody {
         return new JSONObject(requestParams).toString();
     }
 
+    public RequestBody(User user) {
+        setWebsite(user.getWebsite());
+        setAddress(user.getAddress());
+        setGender(user.getGender());
+        setPhone(user.getPhone());
+        setDob(user.getDob());
+        setLastName(user.getLastName());
+        setFirstName(user.getFirstName());
+        setEmail(user.getEmail());
+        setStatus(user.getStatus());
+    }
+
     public RequestBody setWebsite(String website) {
         requestParams.put(WEBSITE, website);
         return this;
@@ -51,11 +63,6 @@ public class RequestBody {
 
     public RequestBody setLastName(String lastName) {
         requestParams.put(LAST_NAME, lastName);
-        return this;
-    }
-
-    public RequestBody setId(String id) {
-        requestParams.put(ID, id);
         return this;
     }
 

@@ -1,5 +1,10 @@
 package gorest.co.in;
 
+import io.restassured.response.Response;
+import org.json.JSONObject;
+
+import static gorest.co.in.RequestBody.*;
+
 public class User {
     private String website;
     private String address;
@@ -11,6 +16,42 @@ public class User {
     private String firstName;
     private String email;
     private String status;
+
+    public static final String randomEmail = System.currentTimeMillis() + "@gmail.com";
+
+    public User() {}
+
+    public User createRandomUser() {
+        User user = new User();
+        user.setWebsite("https://gorest.co.in/");
+        user.setAddress("USA");
+        user.setGender("male");
+        user.setPhone("777.555.333");
+        user.setDob("1988-06-03");
+        user.setLastName("Doe");
+        user.setFirstName("John");
+        user.setEmail(randomEmail);
+        user.setStatus("active");
+        return user;
+    }
+
+    public static User returnUserFromResponse(Response response) {
+        JSONObject jsonResult = Utils.jsonObject(response)
+                .getJSONArray("result").getJSONObject(0);
+
+        User user = new User();
+        user.setWebsite(jsonResult.get(WEBSITE).toString());
+        user.setAddress(jsonResult.get(ADDRESS).toString());
+        user.setGender(jsonResult.get(GENDER).toString());
+        user.setPhone(jsonResult.get(PHONE).toString());
+        user.setDob(jsonResult.get(DOB).toString());
+        user.setLastName(jsonResult.get(LAST_NAME).toString());
+        user.setId(jsonResult.get(ID).toString());
+        user.setFirstName(jsonResult.get(FIRST_NAME).toString());
+        user.setEmail(jsonResult.get(EMAIL).toString());
+        user.setStatus(jsonResult.get(STATUS).toString());
+        return user;
+    }
 
     public String getWebsite() {
         return website;

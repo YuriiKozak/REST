@@ -14,42 +14,29 @@ import static gorest.co.in.RequestBody.*;
 public class UserTests extends BaseTest {
 
     //this does not belong here, please implement it in proper builder pattern
-    User user = new User.Builder()
-            .setFirstName("John")
-            .setLastName("Doe")
-            .setGender("male")
-            .setEmail(randomEmail)
-            .setStatus("active")
-            .build();
+    User user = new User().createRandomUser();
 
     @Test(priority = 1)
     public void postUserTest() {
-        RestAssured.baseURI = baseURI;
+        RestAssured.baseURI = usersURI;
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders(accessToken));
+        request.headers(RequestHeader.getHeaders());
 
-        //are you planning to include this in every test?
-        RequestBody requestBody = new RequestBody()
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setGender(user.getGender())
-                .setEmail(user.getEmail())
-                .setStatus(user.getStatus());
-
+        RequestBody requestBody = new RequestBody(user);
         request.body(requestBody.getRequestBody());
 
-        Response response = request.post("/users");
+        Response response = request.post();
 
         Assertions.assertThat(response.getStatusCode())
                 .as("Wrong response status code.")
-                .isEqualTo(302);//magic number
+                .isEqualTo(StatusCodes.FOUND.getCode());
 
         JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get("_meta");
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get("code"))
                 .as("Wrong response code.")
-                .isEqualTo(201);//again
+                .isEqualTo(StatusCodes.CREATED.getCode());
         softAssertions.assertThat(jsonObject.get("message"))
                 .as("Wrong response message.")
                 .isEqualTo("A resource was successfully created in response to a POST request. " +
@@ -61,18 +48,18 @@ public class UserTests extends BaseTest {
 
     @Test(priority = 2, dependsOnMethods={"postUserTest"})//why is this depending on something?
     public void getUserTest() {
-        RestAssured.baseURI = baseURI;
+        RestAssured.baseURI = usersURI;
         RequestSpecification request = RestAssured.given();//code duplication
 
         Response response = request
                 .when()
-                .queryParam(ACCESS_TOKEN, accessToken)
+                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
                 .queryParam(EMAIL, user.getEmail())
-                .get("/users");//does this belong in test?
+                .get();
 
         Assertions.assertThat(response.getStatusCode())
                 .as("Wrong response status code.")
-                .isEqualTo(200);
+                .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject jsonObject = Utils.jsonObject(response);
 
@@ -81,16 +68,16 @@ public class UserTests extends BaseTest {
 
         user.setId(jsonResult.get(ID).toString());
 
-        Assertions.assertThat(jsonResult.get(EMAIL).toString())
-                .as("Wrong email.")
-                .isEqualTo(user.getEmail());
+        Assertions.assertThat(User.returnUserFromResponse(response))
+                .as("Users are not equal.")
+                .isEqualTo(user);
 
         JSONObject json_meta = (JSONObject) jsonObject.get("_meta");
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(json_meta.get("code"))
                 .as("Wrong response code.")
-                .isEqualTo(200);
+                .isEqualTo(StatusCodes.OK.getCode());
         softAssertions.assertThat(json_meta.get("message"))
                 .as("Wrong response message.")
                 .isEqualTo("OK. Everything worked as expected.");
@@ -101,22 +88,22 @@ public class UserTests extends BaseTest {
 
     @Test(priority = 3, dependsOnMethods={"postUserTest"})
     public void deleteUserTest() {
-        RestAssured.baseURI = baseURI;
+        RestAssured.baseURI = usersURI;
         RequestSpecification deleteRequest = RestAssured.given();
-        deleteRequest.headers(RequestHeader.getHeaders(accessToken));
+        deleteRequest.headers(RequestHeader.getHeaders());
 
-        Response deleteResponse = deleteRequest.delete("/users/" + user.getId());
+        Response deleteResponse = deleteRequest.delete(user.getId());
 
         Assertions.assertThat(deleteResponse.getStatusCode())
                 .as("Wrong response status code.")
-                .isEqualTo(200);
+                .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject deleteJsonObject = (JSONObject) Utils.jsonObject(deleteResponse).get("_meta");
 
         SoftAssertions deleteSoftAssertions = new SoftAssertions();
         deleteSoftAssertions.assertThat(deleteJsonObject.get("code"))
                 .as("Wrong response code.")
-                .isEqualTo(204);
+                .isEqualTo(StatusCodes.NO_CONTENT.getCode());
         deleteSoftAssertions.assertThat(deleteJsonObject.get("message"))
                 .as("Wrong response message.")
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
@@ -130,13 +117,13 @@ public class UserTests extends BaseTest {
 
         Response response = request
                 .when()
-                .queryParam(ACCESS_TOKEN, accessToken)
+                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
                 .queryParam(EMAIL, user.getEmail())
-                .get("/users");
+                .get();
 
         Assertions.assertThat(response.getStatusCode())
                 .as("Wrong response status code.")
-                .isEqualTo(200);
+                .isEqualTo(StatusCodes.OK.getCode());
 
         JSONArray jsonArray = Utils.jsonObject(response).getJSONArray("result");
 
@@ -149,7 +136,7 @@ public class UserTests extends BaseTest {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get("code"))
                 .as("Wrong response code.")
-                .isEqualTo(200);
+                .isEqualTo(StatusCodes.OK.getCode());
         softAssertions.assertThat(jsonObject.get("message"))
                 .as("Wrong response message.")
                 .isEqualTo("OK. Everything worked as expected.");
