@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.testng.annotations.Test;
 
 import static gorest.co.in.RequestBody.*;
+import static gorest.co.in.ResponseBody.*;
 
 public class UserTests extends BaseTest {
 
@@ -31,13 +32,13 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get("_meta");
+        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(jsonObject.get("code"))
+        softAssertions.assertThat(jsonObject.get(CODE))
                 .as("Wrong response code.")
                 .isEqualTo(StatusCodes.CREATED.getCode());
-        softAssertions.assertThat(jsonObject.get("message"))
+        softAssertions.assertThat(jsonObject.get(MESSAGE))
                 .as("Wrong response message.")
                 .isEqualTo("A resource was successfully created in response to a POST request. " +
                         "The Location header contains the URL pointing to the newly created resource.");
@@ -64,21 +65,19 @@ public class UserTests extends BaseTest {
         JSONObject jsonObject = Utils.jsonObject(response);
 
         JSONObject jsonResult = Utils.jsonObject(response)
-                .getJSONArray("result").getJSONObject(0);
+                .getJSONArray(RESULT).getJSONObject(0);
 
         user.setId(jsonResult.get(ID).toString());
 
-        Assertions.assertThat(User.returnUserFromResponse(response))
-                .as("Users are not equal.")
-                .isEqualTo(user);
+        User.verifyUsers(User.returnUserFromResponse(response), user);
 
-        JSONObject json_meta = (JSONObject) jsonObject.get("_meta");
+        JSONObject json_meta = (JSONObject) jsonObject.get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(json_meta.get("code"))
+        softAssertions.assertThat(json_meta.get(CODE))
                 .as("Wrong response code.")
                 .isEqualTo(StatusCodes.OK.getCode());
-        softAssertions.assertThat(json_meta.get("message"))
+        softAssertions.assertThat(json_meta.get(MESSAGE))
                 .as("Wrong response message.")
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
@@ -98,13 +97,13 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject deleteJsonObject = (JSONObject) Utils.jsonObject(deleteResponse).get("_meta");
+        JSONObject deleteJsonObject = (JSONObject) Utils.jsonObject(deleteResponse).get(META);
 
         SoftAssertions deleteSoftAssertions = new SoftAssertions();
-        deleteSoftAssertions.assertThat(deleteJsonObject.get("code"))
+        deleteSoftAssertions.assertThat(deleteJsonObject.get(CODE))
                 .as("Wrong response code.")
                 .isEqualTo(StatusCodes.NO_CONTENT.getCode());
-        deleteSoftAssertions.assertThat(deleteJsonObject.get("message"))
+        deleteSoftAssertions.assertThat(deleteJsonObject.get(MESSAGE))
                 .as("Wrong response message.")
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         deleteSoftAssertions.assertAll();
@@ -125,19 +124,19 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONArray jsonArray = Utils.jsonObject(response).getJSONArray("result");
+        JSONArray jsonArray = Utils.jsonObject(response).getJSONArray(RESULT);
 
         Assertions.assertThat(jsonArray)
                 .as("JSONArray is not empty.")
                 .isEmpty();
 
-        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get("_meta");
+        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(jsonObject.get("code"))
+        softAssertions.assertThat(jsonObject.get(CODE))
                 .as("Wrong response code.")
                 .isEqualTo(StatusCodes.OK.getCode());
-        softAssertions.assertThat(jsonObject.get("message"))
+        softAssertions.assertThat(jsonObject.get(MESSAGE))
                 .as("Wrong response message.")
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();

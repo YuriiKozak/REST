@@ -1,6 +1,7 @@
 package gorest.co.in;
 
 import io.restassured.response.Response;
+import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
 import static gorest.co.in.RequestBody.*;
@@ -51,6 +52,41 @@ public class User {
         user.setEmail(jsonResult.get(EMAIL).toString());
         user.setStatus(jsonResult.get(STATUS).toString());
         return user;
+    }
+
+    public static void verifyUsers(User actualUser, User expectedUser) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(actualUser.getWebsite())
+                .as("Website is incorrect.")
+                .isEqualTo(expectedUser.getWebsite());
+        softAssertions.assertThat(actualUser.getAddress())
+                .as("Address is incorrect.")
+                .isEqualTo(expectedUser.getAddress());
+        softAssertions.assertThat(actualUser.getGender())
+                .as("Gender is incorrect.")
+                .isEqualTo(expectedUser.getGender());
+        softAssertions.assertThat(actualUser.getPhone())
+                .as("Phone is incorrect.")
+                .isEqualTo(expectedUser.getPhone());
+        softAssertions.assertThat(actualUser.getDob())
+                .as("Dob is incorrect.")
+                .isEqualTo(expectedUser.getDob());
+        softAssertions.assertThat(actualUser.getLastName())
+                .as("Last name is incorrect.")
+                .isEqualTo(expectedUser.getLastName());
+        softAssertions.assertThat(actualUser.getId())
+                .as("Id is incorrect.")
+                .isEqualTo(expectedUser.getId());
+        softAssertions.assertThat(actualUser.getFirstName())
+                .as("First name is incorrect.")
+                .isEqualTo(expectedUser.getFirstName());
+        softAssertions.assertThat(actualUser.getEmail())
+                .as("Email is incorrect.")
+                .isEqualTo(expectedUser.getEmail());
+        softAssertions.assertThat(actualUser.getStatus())
+                .as("Status is incorrect.")
+                .isEqualTo(expectedUser.getStatus());
+        softAssertions.assertAll();
     }
 
     public String getWebsite() {
