@@ -1,10 +1,11 @@
-package gorest.co.in;
+package gorest.co.in.users;
 
+import gorest.co.in.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.RequestBody.*;
+import static gorest.co.in.users.RequestBody.*;
 
 public class User {
     private String website;
@@ -18,7 +19,7 @@ public class User {
     private String email;
     private String status;
 
-    public static final String randomEmail = System.currentTimeMillis() + "@gmail.com";
+    public String randomEmail = System.currentTimeMillis() + "@gmail.com";
 
     public User() {}
 
@@ -36,8 +37,9 @@ public class User {
         return user;
     }
 
-    public static User returnUserFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response)
+    public User returnUserFromResponse(Response response) {
+        Utils utils = new Utils();
+        JSONObject jsonResult = utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0);
 
         User user = new User();
@@ -54,7 +56,7 @@ public class User {
         return user;
     }
 
-    public static void verifyUsers(User actualUser, User expectedUser) {
+    public void verifyUsers(User actualUser, User expectedUser) {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(actualUser.getWebsite())
                 .as("Website is incorrect.")

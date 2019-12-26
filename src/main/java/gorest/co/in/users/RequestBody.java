@@ -1,4 +1,4 @@
-package gorest.co.in;
+package gorest.co.in.users;
 
 import org.json.JSONObject;
 

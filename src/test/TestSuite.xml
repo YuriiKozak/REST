@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="TestSuite" parallel="tests" thread-count="1">
+    <test name="UserTests" >
+        <classes>
+            <class name="gorest.co.in.users.UserTests"/>
+        </classes>
+    </test>
+    <test name="PostTests" >
+        <classes>
+            <class name="gorest.co.in.posts.PostTests"/>
+        </classes>
+    </test>
+</suite>

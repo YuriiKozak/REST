@@ -1,4 +1,4 @@
-package gorest.co.in;
+package gorest.co.in.constants;
 
 public enum StatusCodes {
     CONTINUE(100, "Continue"),

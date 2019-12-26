@@ -1,5 +1,9 @@
-package gorest.co.in;
+package gorest.co.in.users;
 
+import gorest.co.in.BaseTest;
+import gorest.co.in.constants.StatusCodes;
+import gorest.co.in.Utils;
+import gorest.co.in.headers.RequestHeader;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -9,13 +13,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.RequestBody.*;
+import static gorest.co.in.users.RequestBody.*;
 import static gorest.co.in.ResponseBody.*;
 
 public class UserTests extends BaseTest {
 
     //this does not belong here, please implement it in proper builder pattern
     User user = new User().createRandomUser();
+    Utils utils = new Utils();
 
     @Test(priority = 1)
     public void postUserTest() {
@@ -32,7 +37,7 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
+        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -44,7 +49,7 @@ public class UserTests extends BaseTest {
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        utils.printResponse(response);
     }
 
     @Test(priority = 2, dependsOnMethods={"postUserTest"})//why is this depending on something?
@@ -62,14 +67,14 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = Utils.jsonObject(response);
+        JSONObject jsonObject = utils.jsonObject(response);
 
-        JSONObject jsonResult = Utils.jsonObject(response)
+        JSONObject jsonResult = utils.jsonObject(response)
                 .getJSONArray(RESULT).getJSONObject(0);
 
         user.setId(jsonResult.get(ID).toString());
 
-        User.verifyUsers(User.returnUserFromResponse(response), user);
+        user.verifyUsers(user.returnUserFromResponse(response), user);
 
         JSONObject json_meta = (JSONObject) jsonObject.get(META);
 
@@ -82,7 +87,7 @@ public class UserTests extends BaseTest {
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        utils.printResponse(response);
     }
 
     @Test(priority = 3, dependsOnMethods={"postUserTest"})
@@ -97,7 +102,7 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject deleteJsonObject = (JSONObject) Utils.jsonObject(deleteResponse).get(META);
+        JSONObject deleteJsonObject = (JSONObject) utils.jsonObject(deleteResponse).get(META);
 
         SoftAssertions deleteSoftAssertions = new SoftAssertions();
         deleteSoftAssertions.assertThat(deleteJsonObject.get(CODE))
@@ -108,7 +113,7 @@ public class UserTests extends BaseTest {
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         deleteSoftAssertions.assertAll();
 
-        Utils.printResponse(deleteResponse);
+        utils.printResponse(deleteResponse);
 
         //Verify User deleted:
 
@@ -124,13 +129,13 @@ public class UserTests extends BaseTest {
                 .as("Wrong response status code.")
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONArray jsonArray = Utils.jsonObject(response).getJSONArray(RESULT);
+        JSONArray jsonArray = utils.jsonObject(response).getJSONArray(RESULT);
 
         Assertions.assertThat(jsonArray)
                 .as("JSONArray is not empty.")
                 .isEmpty();
 
-        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
+        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -141,6 +146,6 @@ public class UserTests extends BaseTest {
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        utils.printResponse(response);
     }
 }
