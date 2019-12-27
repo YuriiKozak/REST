@@ -1,22 +1,20 @@
 package gorest.co.in.users;
 
+import gorest.co.in.BaseRequestBody;
 import org.json.JSONObject;
 
 import java.util.*;
 
-public class RequestBody {
+public class RequestBody extends BaseRequestBody {
     public static final String WEBSITE = "website";
     public static final String ADDRESS = "address";
     public static final String GENDER = "gender";
     public static final String PHONE = "phone";
     public static final String DOB = "dob";
     public static final String LAST_NAME = "last_name";
-    public static final String ID = "id";
     public static final String FIRST_NAME = "first_name";
     public static final String EMAIL = "email";
     public static final String STATUS = "status";
-
-    public static final String ACCESS_TOKEN = "access-token";
 
     private Map<String, String> requestParams = new HashMap<>();
 

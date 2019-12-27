@@ -1,16 +1,14 @@
 package gorest.co.in.posts;
 
+import gorest.co.in.BaseRequestBody;
 import org.json.JSONObject;
 
 import java.util.*;
 
-public class RequestBody {
-    public static final String ID = "id";
+public class RequestBody extends BaseRequestBody {
     public static final String USER_ID = "user_id";
     public static final String TITLE = "title";
     public static final String BODY = "body";
-
-    public static final String ACCESS_TOKEN = "access-token";
 
     private Map<String, String> requestParams = new HashMap<>();
 

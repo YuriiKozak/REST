@@ -19,8 +19,6 @@ public class User {
     private String email;
     private String status;
 
-    public String randomEmail = System.currentTimeMillis() + "@gmail.com";
-
     public User() {}
 
     public User createRandomUser() {
@@ -32,7 +30,7 @@ public class User {
         user.setDob("1988-06-03");
         user.setLastName("Doe");
         user.setFirstName("John");
-        user.setEmail(randomEmail);
+        user.setEmail(new Utils().randomEmail);
         user.setStatus("active");
         return user;
     }

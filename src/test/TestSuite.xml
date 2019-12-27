@@ -11,4 +11,9 @@
             <class name="gorest.co.in.posts.PostTests"/>
         </classes>
     </test>
+    <test name="CommentTests" >
+        <classes>
+            <class name="gorest.co.in.comments.CommentTests"/>
+        </classes>
+    </test>
 </suite>

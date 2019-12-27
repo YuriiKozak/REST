@@ -1,35 +1,33 @@
-package gorest.co.in.users;
+package gorest.co.in.comments;
 
 import gorest.co.in.BaseTest;
-import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.Utils;
+import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.headers.RequestHeader;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import static gorest.co.in.comments.ResponseBody.*;
+import static gorest.co.in.comments.RequestBody.*;
 import static gorest.co.in.constants.AssertionMessages.*;
-import static gorest.co.in.users.RequestBody.*;
-import static gorest.co.in.BaseResponseBody.*;
 
-public class UserTests extends BaseTest {
+public class CommentTests extends BaseTest {
 
-    //this does not belong here, please implement it in proper builder pattern
-    User user = new User().createRandomUser();
+    Comment comment = new Comment().createRandomComment();
     Utils utils = new Utils();
 
     @Test(priority = 1)
-    public void postUserTest() {
-        RestAssured.baseURI = usersURI;
+    public void postCommentTest() {
+        RestAssured.baseURI = commentsURI;
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
 
-        RequestBody requestBody = new RequestBody(user);
+        RequestBody requestBody = new RequestBody(comment);
         request.body(requestBody.getRequestBody());
 
         Response response = request.post();
@@ -53,15 +51,15 @@ public class UserTests extends BaseTest {
         utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"postUserTest"})//why is this depending on something?
-    public void getUserTest() {
-        RestAssured.baseURI = usersURI;
-        RequestSpecification request = RestAssured.given();//code duplication
+    @Test(priority = 2, dependsOnMethods={"postCommentTest"})
+    public void getCommentTest() {
+        RestAssured.baseURI = commentsURI;
+        RequestSpecification request = RestAssured.given();
 
         Response response = request
                 .when()
                 .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(EMAIL, user.getEmail())
+                .queryParam(POST_ID, comment.getPostId())
                 .get();
 
         Assertions.assertThat(response.getStatusCode())
@@ -70,12 +68,12 @@ public class UserTests extends BaseTest {
 
         JSONObject jsonObject = utils.jsonObject(response);
 
-        JSONObject jsonResult = utils.jsonObject(response)
-                .getJSONArray(RESULT).getJSONObject(0);
+        JSONObject jsonResult = jsonObject.getJSONArray(RESULT).getJSONObject(0);
 
-        user.setId(jsonResult.get(ID).toString());
+        comment.setId(jsonResult.get(ID).toString());
+        comment.setEmail(jsonResult.get(EMAIL).toString());
 
-        user.verifyUsers(user.returnUserFromResponse(response), user);
+        comment.verifyComments(comment.returnCommentFromResponse(response), comment);
 
         JSONObject json_meta = (JSONObject) jsonObject.get(META);
 
@@ -91,13 +89,13 @@ public class UserTests extends BaseTest {
         utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"postUserTest"})
-    public void deleteUserTest() {
-        RestAssured.baseURI = usersURI;
+    @Test(priority = 3, dependsOnMethods={"getCommentTest"})
+    public void deleteCommentTest() {
+        RestAssured.baseURI = commentsURI;
         RequestSpecification deleteRequest = RestAssured.given();
         deleteRequest.headers(RequestHeader.getHeaders());
 
-        Response deleteResponse = deleteRequest.delete(user.getId());
+        Response deleteResponse = deleteRequest.delete(comment.getId());
 
         Assertions.assertThat(deleteResponse.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -115,38 +113,5 @@ public class UserTests extends BaseTest {
         deleteSoftAssertions.assertAll();
 
         utils.printResponse(deleteResponse);
-
-        //Verify User deleted:
-
-        RequestSpecification request = RestAssured.given();
-
-        Response response = request
-                .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(EMAIL, user.getEmail())
-                .get();
-
-        Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
-                .isEqualTo(StatusCodes.OK.getCode());
-
-        JSONArray jsonArray = utils.jsonObject(response).getJSONArray(RESULT);
-
-        Assertions.assertThat(jsonArray)
-                .as("JSONArray is not empty.")
-                .isEmpty();
-
-        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
-
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(jsonObject.get(CODE))
-                .as(WRONG_RESPONSE_CODE)
-                .isEqualTo(StatusCodes.OK.getCode());
-        softAssertions.assertThat(jsonObject.get(MESSAGE))
-                .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("OK. Everything worked as expected.");
-        softAssertions.assertAll();
-
-        utils.printResponse(response);
     }
 }

@@ -1,6 +1,6 @@
 package gorest.co.in;
 
-public class ResponseBody {
+public class BaseResponseBody {
     public static final String RESULT = "result";
     public static final String META = "_meta";
     public static final String CODE = "code";
