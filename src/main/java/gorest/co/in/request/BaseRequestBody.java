@@ -1,4 +1,4 @@
-package gorest.co.in;
+package gorest.co.in.request;
 
 public class BaseRequestBody {
     public static final String ID = "id";

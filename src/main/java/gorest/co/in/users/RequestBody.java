@@ -1,6 +1,6 @@
 package gorest.co.in.users;
 
-import gorest.co.in.BaseRequestBody;
+import gorest.co.in.request.BaseRequestBody;
 import org.json.JSONObject;
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package gorest.co.in;
+package gorest.co.in.base;
 
 public class BaseTest {
     public static final String usersURI = "https://gorest.co.in/public-api/users";

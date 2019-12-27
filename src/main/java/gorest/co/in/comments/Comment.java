@@ -1,6 +1,6 @@
 package gorest.co.in.comments;
 
-import gorest.co.in.Utils;
+import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;

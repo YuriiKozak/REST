@@ -1,4 +1,4 @@
-package gorest.co.in;
+package gorest.co.in.utils;
 
 import io.restassured.response.Response;
 import org.json.JSONObject;

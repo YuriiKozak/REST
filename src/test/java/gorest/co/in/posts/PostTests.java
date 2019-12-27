@@ -1,8 +1,8 @@
 package gorest.co.in.posts;
 
-import gorest.co.in.BaseTest;
+import gorest.co.in.base.BaseTest;
 import gorest.co.in.constants.StatusCodes;
-import gorest.co.in.Utils;
+import gorest.co.in.utils.Utils;
 import gorest.co.in.headers.RequestHeader;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

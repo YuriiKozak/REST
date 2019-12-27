@@ -1,8 +1,8 @@
 package gorest.co.in.users;
 
-import gorest.co.in.BaseTest;
+import gorest.co.in.base.BaseTest;
 import gorest.co.in.constants.StatusCodes;
-import gorest.co.in.Utils;
+import gorest.co.in.utils.Utils;
 import gorest.co.in.headers.RequestHeader;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 
 import static gorest.co.in.constants.AssertionMessages.*;
 import static gorest.co.in.users.RequestBody.*;
-import static gorest.co.in.BaseResponseBody.*;
+import static gorest.co.in.response.BaseResponseBody.*;
 
 public class UserTests extends BaseTest {
 

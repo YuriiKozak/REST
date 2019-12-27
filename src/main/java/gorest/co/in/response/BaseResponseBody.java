@@ -1,4 +1,4 @@
-package gorest.co.in;
+package gorest.co.in.response;
 
 public class BaseResponseBody {
     public static final String RESULT = "result";
