@@ -1,3 +1,3 @@
 # Project exclude paths
-TODO make proper git ignore and delete from git IDE param files
 /target/
+/.idea/
