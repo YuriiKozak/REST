@@ -1,9 +1,9 @@
-package gorest.co.in.posts;
+package gorest.co.in.albums;
 
 import gorest.co.in.base.BaseTest;
 import gorest.co.in.constants.StatusCodes;
-import gorest.co.in.utils.Utils;
 import gorest.co.in.headers.RequestHeader;
+import gorest.co.in.utils.Utils;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -13,21 +13,21 @@ import org.json.JSONObject;
 import org.testng.annotations.Test;
 
 import static gorest.co.in.constants.AssertionMessages.*;
-import static gorest.co.in.posts.RequestBody.*;
-import static gorest.co.in.posts.ResponseBody.*;
+import static gorest.co.in.albums.RequestBody.*;
+import static gorest.co.in.albums.ResponseBody.*;
 
-public class PostTests extends BaseTest {
+public class AlbumTests extends BaseTest {
 
-    Post post = new Post().createRandomPost();
+    Album album = new Album().createRandomAlbum();
     Utils utils = new Utils();
 
     @Test(priority = 1)
-    public void postPostTest() {
-        RestAssured.baseURI = postsURI;
+    public void postAlbumTest() {
+        RestAssured.baseURI = albumsURI;
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
 
-        RequestBody requestBody = new RequestBody(post);
+        RequestBody requestBody = new RequestBody(album);
         request.body(requestBody.getRequestBody());
 
         Response response = request.post();
@@ -51,15 +51,15 @@ public class PostTests extends BaseTest {
         utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"postPostTest"})
-    public void getPostTest() {
-        RestAssured.baseURI = postsURI;
+    @Test(priority = 2, dependsOnMethods={"postAlbumTest"})
+    public void getAlbumTest() {
+        RestAssured.baseURI = albumsURI;
         RequestSpecification request = RestAssured.given();
 
         Response response = request
                 .when()
                 .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(USER_ID, post.getUserId())
+                .queryParam(USER_ID, album.getUserId())
                 .get();
 
         Assertions.assertThat(response.getStatusCode())
@@ -70,9 +70,9 @@ public class PostTests extends BaseTest {
 
         JSONObject jsonResult = jsonObject.getJSONArray(RESULT).getJSONObject(0);
 
-        post.setId(jsonResult.get(ID).toString());
+        album.setId(jsonResult.get(ID).toString());
 
-        post.verifyPosts(post.returnPostFromResponse(response), post);
+        album.verifyAlbums(album.returnAlbumFromResponse(response), album);
 
         JSONObject json_meta = (JSONObject) jsonObject.get(META);
 
@@ -88,13 +88,13 @@ public class PostTests extends BaseTest {
         utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"getPostTest"})
-    public void deletePostTest() {
-        RestAssured.baseURI = postsURI;
+    @Test(priority = 3, dependsOnMethods={"getAlbumTest"})
+    public void deleteAlbumTest() {
+        RestAssured.baseURI = albumsURI;
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
 
-        Response response = request.delete(post.getId());
+        Response response = request.delete(album.getId());
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

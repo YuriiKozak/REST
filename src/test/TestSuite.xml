@@ -16,4 +16,9 @@
             <class name="gorest.co.in.comments.CommentTests"/>
         </classes>
     </test>
+    <test name="AlbumTests" >
+        <classes>
+            <class name="gorest.co.in.albums.AlbumTests"/>
+        </classes>
+    </test>
 </suite>

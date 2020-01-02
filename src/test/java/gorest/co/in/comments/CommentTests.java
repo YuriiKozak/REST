@@ -92,26 +92,26 @@ public class CommentTests extends BaseTest {
     @Test(priority = 3, dependsOnMethods={"getCommentTest"})
     public void deleteCommentTest() {
         RestAssured.baseURI = commentsURI;
-        RequestSpecification deleteRequest = RestAssured.given();
-        deleteRequest.headers(RequestHeader.getHeaders());
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeader.getHeaders());
 
-        Response deleteResponse = deleteRequest.delete(comment.getId());
+        Response response = request.delete(comment.getId());
 
-        Assertions.assertThat(deleteResponse.getStatusCode())
+        Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject deleteJsonObject = (JSONObject) utils.jsonObject(deleteResponse).get(META);
+        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
 
-        SoftAssertions deleteSoftAssertions = new SoftAssertions();
-        deleteSoftAssertions.assertThat(deleteJsonObject.get(CODE))
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(jsonObject.get(CODE))
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.NO_CONTENT.getCode());
-        deleteSoftAssertions.assertThat(deleteJsonObject.get(MESSAGE))
+        softAssertions.assertThat(jsonObject.get(MESSAGE))
                 .as(WRONG_RESPONSE_MESSAGE)
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
-        deleteSoftAssertions.assertAll();
+        softAssertions.assertAll();
 
-        utils.printResponse(deleteResponse);
+        utils.printResponse(response);
     }
 }

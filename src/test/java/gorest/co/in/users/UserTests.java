@@ -9,7 +9,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
@@ -94,57 +93,24 @@ public class UserTests extends BaseTest {
     @Test(priority = 3, dependsOnMethods={"postUserTest"})
     public void deleteUserTest() {
         RestAssured.baseURI = usersURI;
-        RequestSpecification deleteRequest = RestAssured.given();
-        deleteRequest.headers(RequestHeader.getHeaders());
-
-        Response deleteResponse = deleteRequest.delete(user.getId());
-
-        Assertions.assertThat(deleteResponse.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
-                .isEqualTo(StatusCodes.OK.getCode());
-
-        JSONObject deleteJsonObject = (JSONObject) utils.jsonObject(deleteResponse).get(META);
-
-        SoftAssertions deleteSoftAssertions = new SoftAssertions();
-        deleteSoftAssertions.assertThat(deleteJsonObject.get(CODE))
-                .as(WRONG_RESPONSE_CODE)
-                .isEqualTo(StatusCodes.NO_CONTENT.getCode());
-        deleteSoftAssertions.assertThat(deleteJsonObject.get(MESSAGE))
-                .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("The request was handled successfully and the response contains no body content.");
-        deleteSoftAssertions.assertAll();
-
-        utils.printResponse(deleteResponse);
-
-        //Verify User deleted:
-
         RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeader.getHeaders());
 
-        Response response = request
-                .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(EMAIL, user.getEmail())
-                .get();
+        Response response = request.delete(user.getId());
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
-
-        JSONArray jsonArray = utils.jsonObject(response).getJSONArray(RESULT);
-
-        Assertions.assertThat(jsonArray)
-                .as("JSONArray is not empty.")
-                .isEmpty();
 
         JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
                 .as(WRONG_RESPONSE_CODE)
-                .isEqualTo(StatusCodes.OK.getCode());
+                .isEqualTo(StatusCodes.NO_CONTENT.getCode());
         softAssertions.assertThat(jsonObject.get(MESSAGE))
                 .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("OK. Everything worked as expected.");
+                .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
 
         utils.printResponse(response);
