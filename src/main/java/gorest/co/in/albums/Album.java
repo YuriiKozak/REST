@@ -16,7 +16,7 @@ public class Album {
 
     public Album createRandomAlbum() {
         Album album = new Album();
-        album.setUserId("1777");
+        album.setUserId("777");
         album.setTitle("new album title");
         return album;
     }

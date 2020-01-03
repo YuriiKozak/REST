@@ -1,10 +1,10 @@
-package gorest.co.in.users;
+package gorest.co.in.photos;
 
 import gorest.co.in.constants.AssertionMessages;
-import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.constants.BaseUrls;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.headers.RequestHeader;
+import gorest.co.in.utils.Utils;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -13,22 +13,21 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.users.RequestBody.*;
-import static gorest.co.in.users.ResponseBody.*;
+import static gorest.co.in.photos.RequestBody.*;
+import static gorest.co.in.photos.ResponseBody.*;
 
-public class UserTests implements BaseUrls, AssertionMessages {
+public class PhotoTests implements BaseUrls, AssertionMessages {
 
-    //this does not belong here, please implement it in proper builder pattern
-    User user = new User().createRandomUser();
+    Photo photo = new Photo().createRandomPhoto();
     Utils utils = new Utils();
 
     @Test(priority = 1)
-    public void postUserTest() {
-        RestAssured.baseURI = usersURI;
+    public void postPhotoTest() {
+        RestAssured.baseURI = photosURI;
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
 
-        RequestBody requestBody = new RequestBody(user);
+        RequestBody requestBody = new RequestBody(photo);
         request.body(requestBody.getRequestBody());
 
         Response response = request.post();
@@ -52,15 +51,15 @@ public class UserTests implements BaseUrls, AssertionMessages {
         utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"postUserTest"})//why is this depending on something?
-    public void getUserTest() {
-        RestAssured.baseURI = usersURI;
-        RequestSpecification request = RestAssured.given();//code duplication
+    @Test(priority = 2, dependsOnMethods={"postPhotoTest"})
+    public void getPhotoTest() {
+        RestAssured.baseURI = photosURI;
+        RequestSpecification request = RestAssured.given();
 
         Response response = request
                 .when()
                 .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(EMAIL, user.getEmail())
+                .queryParam(ALBUM_ID, photo.getAlbumId())
                 .get();
 
         Assertions.assertThat(response.getStatusCode())
@@ -69,12 +68,13 @@ public class UserTests implements BaseUrls, AssertionMessages {
 
         JSONObject jsonObject = utils.jsonObject(response);
 
-        JSONObject jsonResult = utils.jsonObject(response)
-                .getJSONArray(RESULT).getJSONObject(0);
+        JSONObject jsonResult = jsonObject.getJSONArray(RESULT).getJSONObject(0);
 
-        user.setId(jsonResult.get(ID).toString());
+        photo.setId(jsonResult.get(ID).toString());
+        photo.setUrl(jsonResult.get(URL).toString());
+        photo.setThumbnail(jsonResult.get(THUMBNAIL).toString());
 
-        user.verifyUsers(user.returnUserFromResponse(response), user);
+        photo.verifyPhotos(photo.returnPhotoFromResponse(response), photo);
 
         JSONObject json_meta = (JSONObject) jsonObject.get(META);
 
@@ -90,13 +90,13 @@ public class UserTests implements BaseUrls, AssertionMessages {
         utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"postUserTest"})
-    public void deleteUserTest() {
-        RestAssured.baseURI = usersURI;
+    @Test(priority = 3, dependsOnMethods={"getPhotoTest"})
+    public void deletePhotoTest() {
+        RestAssured.baseURI = photosURI;
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
 
-        Response response = request.delete(user.getId());
+        Response response = request.delete(photo.getId());
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

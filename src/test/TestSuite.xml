@@ -21,4 +21,9 @@
             <class name="gorest.co.in.albums.AlbumTests"/>
         </classes>
     </test>
+    <test name="PhotoTests" >
+        <classes>
+            <class name="gorest.co.in.photos.PhotoTests"/>
+        </classes>
+    </test>
 </suite>

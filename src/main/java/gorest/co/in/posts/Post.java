@@ -17,7 +17,7 @@ public class Post {
 
     public Post createRandomPost() {
         Post post = new Post();
-        post.setUserId("1777");
+        post.setUserId("777");
         post.setTitle("new post title");
         post.setBody("new post body");
         return post;

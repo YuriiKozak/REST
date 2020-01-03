@@ -1,11 +1,11 @@
 package gorest.co.in.posts;
 
-import gorest.co.in.request.BaseRequestBody;
+import gorest.co.in.constants.BaseRequest;
 import org.json.JSONObject;
 
 import java.util.*;
 
-public class RequestBody extends BaseRequestBody {
+public class RequestBody implements BaseRequest {
     public static final String USER_ID = "user_id";
     public static final String TITLE = "title";
     public static final String BODY = "body";

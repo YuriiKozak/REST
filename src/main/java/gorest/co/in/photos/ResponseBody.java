@@ -1,4 +1,4 @@
-package gorest.co.in.comments;
+package gorest.co.in.photos;
 
 import gorest.co.in.constants.BaseResponse;
 

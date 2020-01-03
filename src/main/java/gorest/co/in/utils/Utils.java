@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 public class Utils {
     public String randomEmail = System.currentTimeMillis() + "@gmail.com";
+    public String randomUrl = "https://random.com/" + System.currentTimeMillis();
 
     public JSONObject jsonObject(Response response) {
         return new JSONObject(response.getBody().asString());

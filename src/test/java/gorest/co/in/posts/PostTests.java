@@ -1,7 +1,8 @@
 package gorest.co.in.posts;
 
-import gorest.co.in.base.BaseTest;
+import gorest.co.in.constants.AssertionMessages;
 import gorest.co.in.constants.StatusCodes;
+import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.utils.Utils;
 import gorest.co.in.headers.RequestHeader;
 import io.restassured.RestAssured;
@@ -12,11 +13,10 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.constants.AssertionMessages.*;
 import static gorest.co.in.posts.RequestBody.*;
 import static gorest.co.in.posts.ResponseBody.*;
 
-public class PostTests extends BaseTest {
+public class PostTests implements BaseUrls, AssertionMessages {
 
     Post post = new Post().createRandomPost();
     Utils utils = new Utils();

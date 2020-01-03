@@ -1,6 +1,7 @@
 package gorest.co.in.comments;
 
-import gorest.co.in.base.BaseTest;
+import gorest.co.in.constants.AssertionMessages;
+import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.utils.Utils;
 import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.headers.RequestHeader;
@@ -12,11 +13,10 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.comments.ResponseBody.*;
 import static gorest.co.in.comments.RequestBody.*;
-import static gorest.co.in.constants.AssertionMessages.*;
+import static gorest.co.in.comments.ResponseBody.*;
 
-public class CommentTests extends BaseTest {
+public class CommentTests implements BaseUrls, AssertionMessages {
 
     Comment comment = new Comment().createRandomComment();
     Utils utils = new Utils();
