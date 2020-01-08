@@ -7,11 +7,11 @@ public class Utils {
     public String randomEmail = System.currentTimeMillis() + "@gmail.com";
     public String randomUrl = "https://random.com/" + System.currentTimeMillis();
 
-    public JSONObject jsonObject(Response response) {
+    public static JSONObject jsonObject(Response response) {
         return new JSONObject(response.getBody().asString());
     }
 
-    public void printResponse(Response response) {
+    public static void printResponse(Response response) {
         System.out.println(jsonObject(response).toString(5));
     }
 }

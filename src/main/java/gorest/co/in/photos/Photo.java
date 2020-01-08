@@ -14,7 +14,8 @@ public class Photo {
     private String url;
     private String thumbnail;
 
-    public Photo() {}
+    public Photo() {
+    }
 
     public Photo createRandomPhoto() {
         Photo photo = new Photo();
@@ -26,8 +27,7 @@ public class Photo {
     }
 
     public Photo returnPhotoFromResponse(Response response) {
-        Utils utils = new Utils();
-        JSONObject jsonResult = utils.jsonObject(response)
+        JSONObject jsonResult = Utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0);
 
         Photo photo = new Photo();

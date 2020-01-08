@@ -14,7 +14,8 @@ public class Comment {
     private String email;
     private String body;
 
-    public Comment() {}
+    public Comment() {
+    }
 
     public Comment createRandomComment() {
         Comment comment = new Comment();
@@ -26,8 +27,7 @@ public class Comment {
     }
 
     public Comment returnCommentFromResponse(Response response) {
-        Utils utils = new Utils();
-        JSONObject jsonResult = utils.jsonObject(response)
+        JSONObject jsonResult = Utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0);
 
         Comment comment = new Comment();

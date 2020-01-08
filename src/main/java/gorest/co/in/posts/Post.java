@@ -1,10 +1,13 @@
 package gorest.co.in.posts;
 
+import gorest.co.in.users.RequestBuilder;
+import gorest.co.in.users.User;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
+import static gorest.co.in.constants.BaseResponse.*;
 import static gorest.co.in.posts.RequestBody.*;
 
 public class Post {
@@ -13,27 +16,29 @@ public class Post {
     private String title;
     private String body;
 
-    public Post() {}
+    public Post() {
+    }
 
     public Post createRandomPost() {
-        Post post = new Post();
-        post.setUserId("777");
-        post.setTitle("new post title");
-        post.setBody("new post body");
-        return post;
+        Response response = RequestBuilder.postUserRequest(new User().createRandomUser());
+        String userId = Utils.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
+        return new Post.Builder()
+                .setUserId(userId)
+                .setTitle("new post title")
+                .setBody("new post body")
+                .build();
     }
 
     public Post returnPostFromResponse(Response response) {
-        Utils utils = new Utils();
-        JSONObject jsonResult = utils.jsonObject(response)
+        JSONObject jsonResult = Utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0);
 
-        Post post = new Post();
-        post.setId(jsonResult.get(ID).toString());
-        post.setUserId(jsonResult.get(USER_ID).toString());
-        post.setTitle(jsonResult.get(TITLE).toString());
-        post.setBody(jsonResult.get(BODY).toString());
-        return post;
+        return new Post.Builder()
+                .setId(jsonResult.get(ID).toString())
+                .setUserId(jsonResult.get(USER_ID).toString())
+                .setTitle(jsonResult.get(TITLE).toString())
+                .setBody(jsonResult.get(BODY).toString())
+                .build();
     }
 
     public void verifyPosts(Post actualPost, Post expectedPost) {

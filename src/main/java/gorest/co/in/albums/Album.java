@@ -1,36 +1,41 @@
 package gorest.co.in.albums;
 
+import gorest.co.in.users.RequestBuilder;
+import gorest.co.in.users.User;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
 import static gorest.co.in.albums.RequestBody.*;
+import static gorest.co.in.constants.BaseResponse.*;
 
 public class Album {
     private String id;
     private String userId;
     private String title;
 
-    public Album() {}
+    public Album() {
+    }
 
     public Album createRandomAlbum() {
-        Album album = new Album();
-        album.setUserId("777");
-        album.setTitle("new album title");
-        return album;
+        Response response = RequestBuilder.postUserRequest(new User().createRandomUser());
+        String userId = Utils.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
+        return new Album.Builder()
+                .setUserId(userId)
+                .setTitle("new album title")
+                .build();
     }
 
     public Album returnAlbumFromResponse(Response response) {
-        Utils utils = new Utils();
-        JSONObject jsonResult = utils.jsonObject(response)
+        JSONObject jsonResult = Utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0);
 
-        Album album = new Album();
-        album.setId(jsonResult.get(ID).toString());
-        album.setUserId(jsonResult.get(USER_ID).toString());
-        album.setTitle(jsonResult.get(TITLE).toString());
-        return album;
+        return new Album.Builder()
+                .setId(jsonResult.get(ID).toString())
+                .setUserId(jsonResult.get(USER_ID).toString())
+                .setTitle(jsonResult.get(TITLE).toString())
+                .build();
     }
 
     public void verifyAlbums(Album actualAlbum, Album expectedAlbum) {

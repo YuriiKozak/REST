@@ -18,8 +18,7 @@ import static gorest.co.in.photos.ResponseBody.*;
 
 public class PhotoTests implements BaseUrls, AssertionMessages {
 
-    Photo photo = new Photo().createRandomPhoto();
-    Utils utils = new Utils();
+    private Photo photo = new Photo().createRandomPhoto();
 
     @Test(priority = 1)
     public void postPhotoTest() {
@@ -36,7 +35,7 @@ public class PhotoTests implements BaseUrls, AssertionMessages {
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
+        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -48,7 +47,7 @@ public class PhotoTests implements BaseUrls, AssertionMessages {
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 
     @Test(priority = 2, dependsOnMethods={"postPhotoTest"})
@@ -66,7 +65,7 @@ public class PhotoTests implements BaseUrls, AssertionMessages {
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = utils.jsonObject(response);
+        JSONObject jsonObject = Utils.jsonObject(response);
 
         JSONObject jsonResult = jsonObject.getJSONArray(RESULT).getJSONObject(0);
 
@@ -87,7 +86,7 @@ public class PhotoTests implements BaseUrls, AssertionMessages {
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 
     @Test(priority = 3, dependsOnMethods={"getPhotoTest"})
@@ -102,7 +101,7 @@ public class PhotoTests implements BaseUrls, AssertionMessages {
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
+        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -113,6 +112,6 @@ public class PhotoTests implements BaseUrls, AssertionMessages {
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 }

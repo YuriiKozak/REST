@@ -18,8 +18,7 @@ import static gorest.co.in.comments.ResponseBody.*;
 
 public class CommentTests implements BaseUrls, AssertionMessages {
 
-    Comment comment = new Comment().createRandomComment();
-    Utils utils = new Utils();
+    private Comment comment = new Comment().createRandomComment();
 
     @Test(priority = 1)
     public void postCommentTest() {
@@ -36,7 +35,7 @@ public class CommentTests implements BaseUrls, AssertionMessages {
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
+        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -48,7 +47,7 @@ public class CommentTests implements BaseUrls, AssertionMessages {
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 
     @Test(priority = 2, dependsOnMethods={"postCommentTest"})
@@ -66,7 +65,7 @@ public class CommentTests implements BaseUrls, AssertionMessages {
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = utils.jsonObject(response);
+        JSONObject jsonObject = Utils.jsonObject(response);
 
         JSONObject jsonResult = jsonObject.getJSONArray(RESULT).getJSONObject(0);
 
@@ -86,7 +85,7 @@ public class CommentTests implements BaseUrls, AssertionMessages {
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 
     @Test(priority = 3, dependsOnMethods={"getCommentTest"})
@@ -101,7 +100,7 @@ public class CommentTests implements BaseUrls, AssertionMessages {
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
+        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -112,6 +111,6 @@ public class CommentTests implements BaseUrls, AssertionMessages {
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 }

@@ -2,12 +2,8 @@ package gorest.co.in.users;
 
 import gorest.co.in.constants.AssertionMessages;
 import gorest.co.in.constants.StatusCodes;
-import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.utils.Utils;
-import gorest.co.in.headers.RequestHeader;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
@@ -16,28 +12,19 @@ import org.testng.annotations.Test;
 import static gorest.co.in.users.RequestBody.*;
 import static gorest.co.in.users.ResponseBody.*;
 
-public class UserTests implements BaseUrls, AssertionMessages {
+public class UserTests implements AssertionMessages {
 
-    //this does not belong here, please implement it in proper builder pattern
-    User user = new User().createRandomUser();
-    Utils utils = new Utils();
+    private User user = new User().createRandomUser();
 
     @Test(priority = 1)
-    public void postUserTest() {
-        RestAssured.baseURI = usersURI;
-        RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
-
-        RequestBody requestBody = new RequestBody(user);
-        request.body(requestBody.getRequestBody());
-
-        Response response = request.post();
+    public void createRandomUser() {
+        Response response = RequestBuilder.postUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
+        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -49,27 +36,20 @@ public class UserTests implements BaseUrls, AssertionMessages {
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"postUserTest"})//why is this depending on something?
-    public void getUserTest() {
-        RestAssured.baseURI = usersURI;
-        RequestSpecification request = RestAssured.given();//code duplication
-
-        Response response = request
-                .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(EMAIL, user.getEmail())
-                .get();
+    @Test(priority = 2, dependsOnMethods={"createRandomUser"})
+    public void verifyRandomlyCreatedUser() {
+        Response response = RequestBuilder.getUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = utils.jsonObject(response);
+        JSONObject jsonObject = Utils.jsonObject(response);
 
-        JSONObject jsonResult = utils.jsonObject(response)
+        JSONObject jsonResult = Utils.jsonObject(response)
                 .getJSONArray(RESULT).getJSONObject(0);
 
         user.setId(jsonResult.get(ID).toString());
@@ -87,22 +67,18 @@ public class UserTests implements BaseUrls, AssertionMessages {
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"postUserTest"})
-    public void deleteUserTest() {
-        RestAssured.baseURI = usersURI;
-        RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
-
-        Response response = request.delete(user.getId());
+    @Test(priority = 3, dependsOnMethods={"createRandomUser"})
+    public void deleteRandomlyCreatedUser() {
+        Response response = RequestBuilder.deleteUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = (JSONObject) utils.jsonObject(response).get(META);
+        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -113,6 +89,6 @@ public class UserTests implements BaseUrls, AssertionMessages {
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
 
-        utils.printResponse(response);
+        Utils.printResponse(response);
     }
 }

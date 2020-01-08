@@ -1,3 +1,28 @@
 # Project exclude paths
+*.class
+*.log
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Intellij
 /target/
-/.idea/
+.idea/
+out/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Maven
+log/
+target/
+test-output/
+
+# Mac
+.DS_Store
