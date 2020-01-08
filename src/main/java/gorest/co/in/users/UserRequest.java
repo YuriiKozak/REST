@@ -1,11 +1,16 @@
 package gorest.co.in.users;
 
 import gorest.co.in.constants.BaseRequest;
+import gorest.co.in.constants.BaseUrls;
+import gorest.co.in.headers.RequestHeader;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 
 import java.util.*;
 
-public class UserRequest implements BaseRequest {
+public class UserRequest implements BaseRequest, BaseUrls {
     public static final String WEBSITE = "website";
     public static final String ADDRESS = "address";
     public static final String GENDER = "gender";
@@ -15,6 +20,36 @@ public class UserRequest implements BaseRequest {
     public static final String FIRST_NAME = "first_name";
     public static final String EMAIL = "email";
     public static final String STATUS = "status";
+
+    private static void setBaseURI() {
+        RestAssured.baseURI = usersURI;
+    }
+
+    public static Response postUserRequest(User user) {
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeader.getHeaders());
+        UserRequest userRequest = new UserRequest(user);
+        request.body(userRequest.getRequestBody());
+        return request.post();
+    }
+
+    public static Response getUserRequest(User user) {
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        return request
+                .when()
+                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
+                .queryParam(EMAIL, user.getEmail())
+                .get();
+    }
+
+    public static Response deleteUserRequest(User user) {
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeader.getHeaders());
+        return request.delete(user.getId());
+    }
 
     private Map<String, String> requestParams = new HashMap<>();
 

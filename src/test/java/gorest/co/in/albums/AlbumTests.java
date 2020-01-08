@@ -18,7 +18,7 @@ public class AlbumTests implements AssertionMessages {
 
     @Test
     public void createRandomAlbum() {
-        Response response = AlbumRequestBuilder.postAlbumRequest(album);
+        Response response = postAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -41,7 +41,7 @@ public class AlbumTests implements AssertionMessages {
 
     @Test
     public void verifyRandomlyCreatedAlbum() {
-        Response response = AlbumRequestBuilder.getAlbumRequest(album);
+        Response response = getAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -71,7 +71,7 @@ public class AlbumTests implements AssertionMessages {
 
     @Test
     public void deleteRandomlyCreatedAlbum() {
-        Response response = AlbumRequestBuilder.deleteAlbumRequest(album);
+        Response response = deleteAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

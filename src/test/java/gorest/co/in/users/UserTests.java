@@ -18,7 +18,7 @@ public class UserTests implements AssertionMessages {
 
     @Test
     public void createRandomUser() {
-        Response response = UserRequestBuilder.postUserRequest(user);
+        Response response = postUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -41,7 +41,7 @@ public class UserTests implements AssertionMessages {
 
     @Test
     public void verifyRandomlyCreatedUser() {
-        Response response = UserRequestBuilder.getUserRequest(user);
+        Response response = getUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -72,7 +72,7 @@ public class UserTests implements AssertionMessages {
 
     @Test
     public void deleteRandomlyCreatedUser() {
-        Response response = UserRequestBuilder.deleteUserRequest(user);
+        Response response = deleteUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

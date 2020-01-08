@@ -18,7 +18,7 @@ public class CommentTests implements AssertionMessages {
 
     @Test
     public void createRandomComment() {
-        Response response = CommentRequestBuilder.postCommentRequest(comment);
+        Response response = postCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -41,7 +41,7 @@ public class CommentTests implements AssertionMessages {
 
     @Test
     public void verifyRandomlyCreatedComment() {
-        Response response = CommentRequestBuilder.getCommentRequest(comment);
+        Response response = getCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -72,7 +72,7 @@ public class CommentTests implements AssertionMessages {
 
     @Test
     public void deleteRandomlyCreatedComment() {
-        Response response = CommentRequestBuilder.deleteCommentRequest(comment);
+        Response response = deleteCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

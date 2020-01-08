@@ -1,9 +1,9 @@
 package gorest.co.in.comments;
 
 import gorest.co.in.posts.Post;
-import gorest.co.in.posts.PostRequestBuilder;
+import gorest.co.in.posts.PostRequest;
 import gorest.co.in.users.User;
-import gorest.co.in.users.UserRequestBuilder;
+import gorest.co.in.users.UserRequest;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
@@ -23,10 +23,10 @@ public class Comment {
     }
 
     public Comment createRandomComment() {
-        Response user_response = UserRequestBuilder.postUserRequest(new User().createRandomUser());
+        Response user_response = UserRequest.postUserRequest(new User().createRandomUser());
         String userId = Utils.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
 
-        Response post_response = PostRequestBuilder.postPostRequest(new Post.Builder()
+        Response post_response = PostRequest.postPostRequest(new Post.Builder()
                 .setUserId(userId)
                 .setTitle("new post title")
                 .setBody("new post body")

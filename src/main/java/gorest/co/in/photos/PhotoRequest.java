@@ -1,15 +1,50 @@
 package gorest.co.in.photos;
 
 import gorest.co.in.constants.BaseRequest;
+import gorest.co.in.constants.BaseUrls;
+import gorest.co.in.headers.RequestHeader;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 
 import java.util.*;
 
-public class PhotoRequest implements BaseRequest {
+public class PhotoRequest implements BaseRequest, BaseUrls {
     public static final String ALBUM_ID = "album_id";
     public static final String TITLE = "title";
     public static final String URL = "url";
     public static final String THUMBNAIL = "thumbnail";
+
+    private static void setBaseURI() {
+        RestAssured.baseURI = photosURI;
+    }
+
+    public static Response postPhotoRequest(Photo photo) {
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeader.getHeaders());
+        PhotoRequest photoRequest = new PhotoRequest(photo);
+        request.body(photoRequest.getRequestBody());
+        return request.post();
+    }
+
+    public static Response getPhotoRequest(Photo photo) {
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        return request
+                .when()
+                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
+                .queryParam(ALBUM_ID, photo.getAlbumId())
+                .get();
+    }
+
+    public static Response deletePhotoRequest(Photo photo) {
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeader.getHeaders());
+        return request.delete(photo.getId());
+    }
 
     private Map<String, String> requestParams = new HashMap<>();
 

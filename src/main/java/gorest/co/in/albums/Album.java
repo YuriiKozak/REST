@@ -1,6 +1,6 @@
 package gorest.co.in.albums;
 
-import gorest.co.in.users.UserRequestBuilder;
+import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
@@ -19,7 +19,7 @@ public class Album {
     }
 
     public Album createRandomAlbum() {
-        Response response = UserRequestBuilder.postUserRequest(new User().createRandomUser());
+        Response response = UserRequest.postUserRequest(new User().createRandomUser());
         String userId = Utils.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
 
         return new Album.Builder()

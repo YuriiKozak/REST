@@ -18,7 +18,7 @@ public class PostTests implements AssertionMessages {
 
     @Test
     public void createRandomPost() {
-        Response response = PostRequestBuilder.postPostRequest(post);
+        Response response = postPostRequest(post);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -41,7 +41,7 @@ public class PostTests implements AssertionMessages {
 
     @Test
     public void verifyRandomlyCreatedPost() {
-        Response response = PostRequestBuilder.getPostRequest(post);
+        Response response = getPostRequest(post);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -71,7 +71,7 @@ public class PostTests implements AssertionMessages {
 
     @Test
     public void deleteRandomlyCreatedPost() {
-        Response response = PostRequestBuilder.deletePostRequest(post);
+        Response response = deletePostRequest(post);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

@@ -18,7 +18,7 @@ public class PhotoTests implements AssertionMessages {
 
     @Test
     public void createRandomPhoto() {
-        Response response = PhotoRequestBuilder.postPhotoRequest(photo);
+        Response response = postPhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -41,7 +41,7 @@ public class PhotoTests implements AssertionMessages {
 
     @Test
     public void verifyRandomlyCreatedPhoto() {
-        Response response = PhotoRequestBuilder.getPhotoRequest(photo);
+        Response response = getPhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -73,7 +73,7 @@ public class PhotoTests implements AssertionMessages {
 
     @Test
     public void deleteRandomlyCreatedPhoto() {
-        Response response = PhotoRequestBuilder.deletePhotoRequest(photo);
+        Response response = deletePhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

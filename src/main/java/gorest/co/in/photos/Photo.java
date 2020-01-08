@@ -1,8 +1,8 @@
 package gorest.co.in.photos;
 
 import gorest.co.in.albums.Album;
-import gorest.co.in.albums.AlbumRequestBuilder;
-import gorest.co.in.users.UserRequestBuilder;
+import gorest.co.in.albums.AlbumRequest;
+import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
@@ -23,10 +23,10 @@ public class Photo {
     }
 
     public Photo createRandomPhoto() {
-        Response user_response = UserRequestBuilder.postUserRequest(new User().createRandomUser());
+        Response user_response = UserRequest.postUserRequest(new User().createRandomUser());
         String userId = Utils.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
 
-        Response album_response = AlbumRequestBuilder.postAlbumRequest(new Album.Builder()
+        Response album_response = AlbumRequest.postAlbumRequest(new Album.Builder()
                 .setUserId(userId)
                 .setTitle("new album title")
                 .build());
