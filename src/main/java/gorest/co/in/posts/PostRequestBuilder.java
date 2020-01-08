@@ -1,4 +1,4 @@
-package gorest.co.in.users;
+package gorest.co.in.posts;
 
 import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.headers.RequestHeader;
@@ -6,37 +6,36 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static gorest.co.in.constants.BaseRequest.*;
-import static gorest.co.in.users.RequestBody.*;
+import static gorest.co.in.posts.PostRequestBody.*;
 
-public class RequestBuilder implements BaseUrls {
+public class PostRequestBuilder implements BaseUrls {
     private static void setBaseURI() {
-        RestAssured.baseURI = usersURI;
+        RestAssured.baseURI = postsURI;
     }
 
-    public static Response postUserRequest(User user) {
+    public static Response postPostRequest(Post post) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        RequestBody requestBody = new RequestBody(user);
-        request.body(requestBody.getRequestBody());
+        PostRequestBody postRequestBody = new PostRequestBody(post);
+        request.body(postRequestBody.getRequestBody());
         return request.post();
     }
 
-    public static Response getUserRequest(User user) {
+    public static Response getPostRequest(Post post) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
                 .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(EMAIL, user.getEmail())
+                .queryParam(USER_ID, post.getUserId())
                 .get();
     }
 
-    public static Response deleteUserRequest(User user) {
+    public static Response deletePostRequest(Post post) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        return request.delete(user.getId());
+        return request.delete(post.getId());
     }
 }

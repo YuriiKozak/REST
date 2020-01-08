@@ -1,11 +1,16 @@
 package gorest.co.in.photos;
 
+import gorest.co.in.albums.Album;
+import gorest.co.in.albums.AlbumRequestBuilder;
+import gorest.co.in.users.UserRequestBuilder;
+import gorest.co.in.users.User;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.photos.RequestBody.*;
+import static gorest.co.in.constants.BaseResponse.*;
+import static gorest.co.in.photos.PhotoRequestBody.*;
 
 public class Photo {
     private String id;
@@ -18,8 +23,17 @@ public class Photo {
     }
 
     public Photo createRandomPhoto() {
+        Response user_response = UserRequestBuilder.postUserRequest(new User().createRandomUser());
+        String userId = Utils.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
+
+        Response album_response = AlbumRequestBuilder.postAlbumRequest(new Album.Builder()
+                .setUserId(userId)
+                .setTitle("new album title")
+                .build());
+        String albumId = Utils.jsonObject(album_response).getJSONObject(RESULT).get(ID).toString();
+
         return new Photo.Builder()
-                .setAlbumId("777")
+                .setAlbumId(albumId)
                 .setTitle("new photo title")
                 .setUrl(new Utils().randomUrl)
                 .setThumbnail(new Utils().randomUrl)
@@ -107,7 +121,7 @@ public class Photo {
         this.thumbnail = builder.thumbnail;
     }
 
-    static class Builder {
+    public static class Builder {
         private String id;
         private String albumId;
         private String title;

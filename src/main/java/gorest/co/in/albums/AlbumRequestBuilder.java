@@ -1,4 +1,4 @@
-package gorest.co.in.posts;
+package gorest.co.in.albums;
 
 import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.headers.RequestHeader;
@@ -6,37 +6,36 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static gorest.co.in.constants.BaseRequest.*;
-import static gorest.co.in.posts.RequestBody.*;
+import static gorest.co.in.albums.AlbumRequestBody.*;
 
-public class RequestBuilder implements BaseUrls {
+public class AlbumRequestBuilder implements BaseUrls {
     private static void setBaseURI() {
-        RestAssured.baseURI = postsURI;
+        RestAssured.baseURI = albumsURI;
     }
 
-    public static Response postPostRequest(Post post) {
+    public static Response postAlbumRequest(Album album) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        RequestBody requestBody = new RequestBody(post);
-        request.body(requestBody.getRequestBody());
+        AlbumRequestBody albumRequestBody = new AlbumRequestBody(album);
+        request.body(albumRequestBody.getRequestBody());
         return request.post();
     }
 
-    public static Response getPostRequest(Post post) {
+    public static Response getAlbumRequest(Album album) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
                 .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(USER_ID, post.getUserId())
+                .queryParam(USER_ID, album.getUserId())
                 .get();
     }
 
-    public static Response deletePostRequest(Post post) {
+    public static Response deleteAlbumRequest(Album album) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        return request.delete(post.getId());
+        return request.delete(album.getId());
     }
 }

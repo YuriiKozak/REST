@@ -1,13 +1,13 @@
 package gorest.co.in.albums;
 
-import gorest.co.in.users.RequestBuilder;
+import gorest.co.in.users.UserRequestBuilder;
 import gorest.co.in.users.User;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.albums.RequestBody.*;
+import static gorest.co.in.albums.AlbumRequestBody.*;
 import static gorest.co.in.constants.BaseResponse.*;
 
 public class Album {
@@ -19,8 +19,9 @@ public class Album {
     }
 
     public Album createRandomAlbum() {
-        Response response = RequestBuilder.postUserRequest(new User().createRandomUser());
+        Response response = UserRequestBuilder.postUserRequest(new User().createRandomUser());
         String userId = Utils.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
+
         return new Album.Builder()
                 .setUserId(userId)
                 .setTitle("new album title")
@@ -82,7 +83,7 @@ public class Album {
         this.title = builder.title;
     }
 
-    static class Builder {
+    public static class Builder {
         private String id;
         private String userId;
         private String title;

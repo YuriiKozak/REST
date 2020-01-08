@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class RequestBody implements BaseRequest {
+public class UserRequestBody implements BaseRequest {
     public static final String WEBSITE = "website";
     public static final String ADDRESS = "address";
     public static final String GENDER = "gender";
@@ -22,7 +22,7 @@ public class RequestBody implements BaseRequest {
         return new JSONObject(requestParams).toString();
     }
 
-    public RequestBody(User user) {
+    public UserRequestBody(User user) {
         setWebsite(user.getWebsite());
         setAddress(user.getAddress());
         setGender(user.getGender());
@@ -34,47 +34,47 @@ public class RequestBody implements BaseRequest {
         setStatus(user.getStatus());
     }
 
-    public RequestBody setWebsite(String website) {
+    public UserRequestBody setWebsite(String website) {
         requestParams.put(WEBSITE, website);
         return this;
     }
 
-    public RequestBody setAddress(String address) {
+    public UserRequestBody setAddress(String address) {
         requestParams.put(ADDRESS, address);
         return this;
     }
 
-    public RequestBody setGender(String gender) {
+    public UserRequestBody setGender(String gender) {
         requestParams.put(GENDER, gender);
         return this;
     }
 
-    public RequestBody setPhone(String phone) {
+    public UserRequestBody setPhone(String phone) {
         requestParams.put(PHONE, phone);
         return this;
     }
 
-    public RequestBody setDob(String dob) {
+    public UserRequestBody setDob(String dob) {
         requestParams.put(DOB, dob);
         return this;
     }
 
-    public RequestBody setLastName(String lastName) {
+    public UserRequestBody setLastName(String lastName) {
         requestParams.put(LAST_NAME, lastName);
         return this;
     }
 
-    public RequestBody setFirstName(String firstName) {
+    public UserRequestBody setFirstName(String firstName) {
         requestParams.put(FIRST_NAME, firstName);
         return this;
     }
 
-    public RequestBody setEmail(String email) {
+    public UserRequestBody setEmail(String email) {
         requestParams.put(EMAIL, email);
         return this;
     }
 
-    public RequestBody setStatus(String status) {
+    public UserRequestBody setStatus(String status) {
         requestParams.put(STATUS, status);
         return this;
     }

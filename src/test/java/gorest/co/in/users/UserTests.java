@@ -9,8 +9,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.users.RequestBody.*;
-import static gorest.co.in.users.ResponseBody.*;
+import static gorest.co.in.users.UserRequestBody.*;
+import static gorest.co.in.users.UserResponseBody.*;
 
 public class UserTests implements AssertionMessages {
 
@@ -18,7 +18,7 @@ public class UserTests implements AssertionMessages {
 
     @Test
     public void createRandomUser() {
-        Response response = RequestBuilder.postUserRequest(user);
+        Response response = UserRequestBuilder.postUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -41,7 +41,7 @@ public class UserTests implements AssertionMessages {
 
     @Test
     public void verifyRandomlyCreatedUser() {
-        Response response = RequestBuilder.getUserRequest(user);
+        Response response = UserRequestBuilder.getUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -72,7 +72,7 @@ public class UserTests implements AssertionMessages {
 
     @Test
     public void deleteRandomlyCreatedUser() {
-        Response response = RequestBuilder.deleteUserRequest(user);
+        Response response = UserRequestBuilder.deleteUserRequest(user);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

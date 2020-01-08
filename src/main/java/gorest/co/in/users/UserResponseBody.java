@@ -2,4 +2,4 @@ package gorest.co.in.users;
 
 import gorest.co.in.constants.BaseResponse;
 
-public class ResponseBody implements BaseResponse {}
+public class UserResponseBody implements BaseResponse {}

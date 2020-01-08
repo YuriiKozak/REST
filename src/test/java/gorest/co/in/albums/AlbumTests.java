@@ -9,8 +9,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.albums.RequestBody.*;
-import static gorest.co.in.albums.ResponseBody.*;
+import static gorest.co.in.albums.AlbumRequestBody.*;
+import static gorest.co.in.albums.AlbumResponseBody.*;
 
 public class AlbumTests implements AssertionMessages {
 
@@ -18,7 +18,7 @@ public class AlbumTests implements AssertionMessages {
 
     @Test
     public void createRandomAlbum() {
-        Response response = RequestBuilder.postAlbumRequest(album);
+        Response response = AlbumRequestBuilder.postAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -41,7 +41,7 @@ public class AlbumTests implements AssertionMessages {
 
     @Test
     public void verifyRandomlyCreatedAlbum() {
-        Response response = RequestBuilder.getAlbumRequest(album);
+        Response response = AlbumRequestBuilder.getAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -71,7 +71,7 @@ public class AlbumTests implements AssertionMessages {
 
     @Test
     public void deleteRandomlyCreatedAlbum() {
-        Response response = RequestBuilder.deleteAlbumRequest(album);
+        Response response = AlbumRequestBuilder.deleteAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

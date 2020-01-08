@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class RequestBody implements BaseRequest {
+public class CommentRequestBody implements BaseRequest {
     public static final String POST_ID = "post_id";
     public static final String NAME = "name";
     public static final String EMAIL = "email";
@@ -17,29 +17,29 @@ public class RequestBody implements BaseRequest {
         return new JSONObject(requestParams).toString();
     }
 
-    public RequestBody(Comment comment) {
+    public CommentRequestBody(Comment comment) {
         setPostId(comment.getPostId());
         setName(comment.getName());
         setEmail(comment.getEmail());
         setBody(comment.getBody());
     }
 
-    public RequestBody setPostId(String postId) {
+    public CommentRequestBody setPostId(String postId) {
         requestParams.put(POST_ID, postId);
         return this;
     }
 
-    public RequestBody setName(String name) {
+    public CommentRequestBody setName(String name) {
         requestParams.put(NAME, name);
         return this;
     }
 
-    public RequestBody setEmail(String email) {
+    public CommentRequestBody setEmail(String email) {
         requestParams.put(EMAIL, email);
         return this;
     }
 
-    public RequestBody setBody(String body) {
+    public CommentRequestBody setBody(String body) {
         requestParams.put(BODY, body);
         return this;
     }

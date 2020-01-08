@@ -1,35 +1,24 @@
 package gorest.co.in.comments;
 
 import gorest.co.in.constants.AssertionMessages;
-import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.utils.Utils;
 import gorest.co.in.constants.StatusCodes;
-import gorest.co.in.headers.RequestHeader;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.comments.RequestBody.*;
-import static gorest.co.in.comments.ResponseBody.*;
+import static gorest.co.in.comments.CommentRequestBody.*;
+import static gorest.co.in.comments.CommentResponseBody.*;
 
-public class CommentTests implements BaseUrls, AssertionMessages {
+public class CommentTests implements AssertionMessages {
 
     private Comment comment = new Comment().createRandomComment();
 
-    @Test(priority = 1)
-    public void postCommentTest() {
-        RestAssured.baseURI = commentsURI;
-        RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
-
-        RequestBody requestBody = new RequestBody(comment);
-        request.body(requestBody.getRequestBody());
-
-        Response response = request.post();
+    @Test
+    public void createRandomComment() {
+        Response response = CommentRequestBuilder.postCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -50,16 +39,9 @@ public class CommentTests implements BaseUrls, AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"postCommentTest"})
-    public void getCommentTest() {
-        RestAssured.baseURI = commentsURI;
-        RequestSpecification request = RestAssured.given();
-
-        Response response = request
-                .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(POST_ID, comment.getPostId())
-                .get();
+    @Test
+    public void verifyRandomlyCreatedComment() {
+        Response response = CommentRequestBuilder.getCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -88,13 +70,9 @@ public class CommentTests implements BaseUrls, AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"getCommentTest"})
-    public void deleteCommentTest() {
-        RestAssured.baseURI = commentsURI;
-        RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
-
-        Response response = request.delete(comment.getId());
+    @Test
+    public void deleteRandomlyCreatedComment() {
+        Response response = CommentRequestBuilder.deleteCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

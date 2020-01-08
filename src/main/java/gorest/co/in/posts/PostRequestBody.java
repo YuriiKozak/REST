@@ -1,13 +1,14 @@
-package gorest.co.in.albums;
+package gorest.co.in.posts;
 
 import gorest.co.in.constants.BaseRequest;
 import org.json.JSONObject;
 
 import java.util.*;
 
-public class RequestBody implements BaseRequest {
+public class PostRequestBody implements BaseRequest {
     public static final String USER_ID = "user_id";
     public static final String TITLE = "title";
+    public static final String BODY = "body";
 
     private Map<String, String> requestParams = new HashMap<>();
 
@@ -15,18 +16,24 @@ public class RequestBody implements BaseRequest {
         return new JSONObject(requestParams).toString();
     }
 
-    public RequestBody(Album album) {
-        setUserId(album.getUserId());
-        setTitle(album.getTitle());
+    public PostRequestBody(Post post) {
+        setUserId(post.getUserId());
+        setTitle(post.getTitle());
+        setBody(post.getBody());
     }
 
-    public RequestBody setUserId(String userId) {
+    public PostRequestBody setUserId(String userId) {
         requestParams.put(USER_ID, userId);
         return this;
     }
 
-    public RequestBody setTitle(String title) {
+    public PostRequestBody setTitle(String title) {
         requestParams.put(TITLE, title);
+        return this;
+    }
+
+    public PostRequestBody setBody(String body) {
+        requestParams.put(BODY, body);
         return this;
     }
 }

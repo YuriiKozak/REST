@@ -1,35 +1,24 @@
 package gorest.co.in.photos;
 
 import gorest.co.in.constants.AssertionMessages;
-import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.constants.StatusCodes;
-import gorest.co.in.headers.RequestHeader;
 import gorest.co.in.utils.Utils;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.photos.RequestBody.*;
-import static gorest.co.in.photos.ResponseBody.*;
+import static gorest.co.in.photos.PhotoRequestBody.*;
+import static gorest.co.in.photos.PhotoResponseBody.*;
 
-public class PhotoTests implements BaseUrls, AssertionMessages {
+public class PhotoTests implements AssertionMessages {
 
     private Photo photo = new Photo().createRandomPhoto();
 
-    @Test(priority = 1)
-    public void postPhotoTest() {
-        RestAssured.baseURI = photosURI;
-        RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
-
-        RequestBody requestBody = new RequestBody(photo);
-        request.body(requestBody.getRequestBody());
-
-        Response response = request.post();
+    @Test
+    public void createRandomPhoto() {
+        Response response = PhotoRequestBuilder.postPhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -50,16 +39,9 @@ public class PhotoTests implements BaseUrls, AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"postPhotoTest"})
-    public void getPhotoTest() {
-        RestAssured.baseURI = photosURI;
-        RequestSpecification request = RestAssured.given();
-
-        Response response = request
-                .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(ALBUM_ID, photo.getAlbumId())
-                .get();
+    @Test
+    public void verifyRandomlyCreatedPhoto() {
+        Response response = PhotoRequestBuilder.getPhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)
@@ -89,13 +71,9 @@ public class PhotoTests implements BaseUrls, AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"getPhotoTest"})
-    public void deletePhotoTest() {
-        RestAssured.baseURI = photosURI;
-        RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
-
-        Response response = request.delete(photo.getId());
+    @Test
+    public void deleteRandomlyCreatedPhoto() {
+        Response response = PhotoRequestBuilder.deletePhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_STATUS_CODE)

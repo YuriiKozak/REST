@@ -1,11 +1,16 @@
 package gorest.co.in.comments;
 
+import gorest.co.in.posts.Post;
+import gorest.co.in.posts.PostRequestBuilder;
+import gorest.co.in.users.User;
+import gorest.co.in.users.UserRequestBuilder;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.comments.RequestBody.*;
+import static gorest.co.in.comments.CommentRequestBody.*;
+import static gorest.co.in.constants.BaseResponse.*;
 
 public class Comment {
     private String id;
@@ -18,8 +23,18 @@ public class Comment {
     }
 
     public Comment createRandomComment() {
+        Response user_response = UserRequestBuilder.postUserRequest(new User().createRandomUser());
+        String userId = Utils.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
+
+        Response post_response = PostRequestBuilder.postPostRequest(new Post.Builder()
+                .setUserId(userId)
+                .setTitle("new post title")
+                .setBody("new post body")
+                .build());
+        String postId = Utils.jsonObject(post_response).getJSONObject(RESULT).get(ID).toString();
+
         return new Comment.Builder()
-                .setPostId("777")
+                .setPostId(postId)
                 .setName("new comment name")
                 .setEmail(new Utils().randomEmail)
                 .setBody("new comment body")
@@ -107,7 +122,7 @@ public class Comment {
         this.body = builder.body;
     }
 
-    static class Builder {
+    public static class Builder {
         private String id;
         private String postId;
         private String name;

@@ -25,7 +25,13 @@
     </test>
     <test name="CommentTests">
         <classes>
-            <class name="gorest.co.in.comments.CommentTests"/>
+            <class name="gorest.co.in.comments.CommentTests">
+                <methods>
+                    <include name="createRandomComment"/>
+                    <include name="verifyRandomlyCreatedComment"/>
+                    <include name="deleteRandomlyCreatedComment"/>
+                </methods>
+            </class>
         </classes>
     </test>
     <test name="AlbumTests">
@@ -41,7 +47,13 @@
     </test>
     <test name="PhotoTests">
         <classes>
-            <class name="gorest.co.in.photos.PhotoTests"/>
+            <class name="gorest.co.in.photos.PhotoTests">
+                <methods>
+                    <include name="createRandomPhoto"/>
+                    <include name="verifyRandomlyCreatedPhoto"/>
+                    <include name="deleteRandomlyCreatedPhoto"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>

@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.users.RequestBody.*;
+import static gorest.co.in.users.UserRequestBody.*;
 
 public class User {
     private String website;
@@ -182,7 +182,7 @@ public class User {
         this.status = builder.status;
     }
 
-    static class Builder {
+    public static class Builder {
         private String website;
         private String address;
         private String gender;

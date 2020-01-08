@@ -1,4 +1,4 @@
-package gorest.co.in.albums;
+package gorest.co.in.users;
 
 import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.headers.RequestHeader;
@@ -6,37 +6,36 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static gorest.co.in.constants.BaseRequest.*;
-import static gorest.co.in.albums.RequestBody.*;
+import static gorest.co.in.users.UserRequestBody.*;
 
-public class RequestBuilder implements BaseUrls {
+public class UserRequestBuilder implements BaseUrls {
     private static void setBaseURI() {
-        RestAssured.baseURI = albumsURI;
+        RestAssured.baseURI = usersURI;
     }
 
-    public static Response postAlbumRequest(Album album) {
+    public static Response postUserRequest(User user) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        RequestBody requestBody = new RequestBody(album);
-        request.body(requestBody.getRequestBody());
+        UserRequestBody userRequestBody = new UserRequestBody(user);
+        request.body(userRequestBody.getRequestBody());
         return request.post();
     }
 
-    public static Response getAlbumRequest(Album album) {
+    public static Response getUserRequest(User user) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
                 .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
-                .queryParam(USER_ID, album.getUserId())
+                .queryParam(EMAIL, user.getEmail())
                 .get();
     }
 
-    public static Response deleteAlbumRequest(Album album) {
+    public static Response deleteUserRequest(User user) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        return request.delete(album.getId());
+        return request.delete(user.getId());
     }
 }
