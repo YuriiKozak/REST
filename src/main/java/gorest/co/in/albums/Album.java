@@ -7,7 +7,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.albums.AlbumRequestBody.*;
+import static gorest.co.in.albums.AlbumRequest.*;
 import static gorest.co.in.constants.BaseResponse.*;
 
 public class Album {

@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.comments.CommentRequestBody.*;
+import static gorest.co.in.comments.CommentRequest.*;
 import static gorest.co.in.constants.BaseResponse.*;
 
 public class Comment {

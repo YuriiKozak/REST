@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class AlbumRequestBody implements BaseRequest {
+public class AlbumRequest implements BaseRequest {
     public static final String USER_ID = "user_id";
     public static final String TITLE = "title";
 
@@ -15,17 +15,17 @@ public class AlbumRequestBody implements BaseRequest {
         return new JSONObject(requestParams).toString();
     }
 
-    public AlbumRequestBody(Album album) {
+    public AlbumRequest(Album album) {
         setUserId(album.getUserId());
         setTitle(album.getTitle());
     }
 
-    public AlbumRequestBody setUserId(String userId) {
+    public AlbumRequest setUserId(String userId) {
         requestParams.put(USER_ID, userId);
         return this;
     }
 
-    public AlbumRequestBody setTitle(String title) {
+    public AlbumRequest setTitle(String title) {
         requestParams.put(TITLE, title);
         return this;
     }

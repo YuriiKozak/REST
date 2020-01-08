@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.users.UserRequestBody.*;
+import static gorest.co.in.users.UserRequest.*;
 
 public class User {
     private String website;

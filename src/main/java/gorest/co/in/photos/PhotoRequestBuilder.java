@@ -6,7 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static gorest.co.in.photos.PhotoRequestBody.*;
+import static gorest.co.in.photos.PhotoRequest.*;
 
 public class PhotoRequestBuilder implements BaseUrls {
     private static void setBaseURI() {
@@ -17,8 +17,8 @@ public class PhotoRequestBuilder implements BaseUrls {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        PhotoRequestBody photoRequestBody = new PhotoRequestBody(photo);
-        request.body(photoRequestBody.getRequestBody());
+        PhotoRequest photoRequest = new PhotoRequest(photo);
+        request.body(photoRequest.getRequestBody());
         return request.post();
     }
 

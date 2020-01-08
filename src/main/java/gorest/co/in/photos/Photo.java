@@ -10,7 +10,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
 import static gorest.co.in.constants.BaseResponse.*;
-import static gorest.co.in.photos.PhotoRequestBody.*;
+import static gorest.co.in.photos.PhotoRequest.*;
 
 public class Photo {
     private String id;

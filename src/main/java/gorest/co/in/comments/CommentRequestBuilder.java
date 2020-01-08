@@ -6,7 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static gorest.co.in.comments.CommentRequestBody.*;
+import static gorest.co.in.comments.CommentRequest.*;
 
 public class CommentRequestBuilder implements BaseUrls {
     private static void setBaseURI() {
@@ -17,8 +17,8 @@ public class CommentRequestBuilder implements BaseUrls {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        CommentRequestBody commentRequestBody = new CommentRequestBody(comment);
-        request.body(commentRequestBody.getRequestBody());
+        CommentRequest commentRequest = new CommentRequest(comment);
+        request.body(commentRequest.getRequestBody());
         return request.post();
     }
 

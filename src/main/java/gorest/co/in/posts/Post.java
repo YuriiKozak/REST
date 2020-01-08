@@ -8,7 +8,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
 import static gorest.co.in.constants.BaseResponse.*;
-import static gorest.co.in.posts.PostRequestBody.*;
+import static gorest.co.in.posts.PostRequest.*;
 
 public class Post {
     private String id;

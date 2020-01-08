@@ -9,8 +9,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.photos.PhotoRequestBody.*;
-import static gorest.co.in.photos.PhotoResponseBody.*;
+import static gorest.co.in.photos.PhotoRequest.*;
+import static gorest.co.in.photos.PhotoResponse.*;
 
 public class PhotoTests implements AssertionMessages {
 

@@ -6,7 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static gorest.co.in.albums.AlbumRequestBody.*;
+import static gorest.co.in.albums.AlbumRequest.*;
 
 public class AlbumRequestBuilder implements BaseUrls {
     private static void setBaseURI() {
@@ -17,8 +17,8 @@ public class AlbumRequestBuilder implements BaseUrls {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        AlbumRequestBody albumRequestBody = new AlbumRequestBody(album);
-        request.body(albumRequestBody.getRequestBody());
+        AlbumRequest albumRequest = new AlbumRequest(album);
+        request.body(albumRequest.getRequestBody());
         return request.post();
     }
 

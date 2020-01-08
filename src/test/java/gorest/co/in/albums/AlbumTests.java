@@ -9,8 +9,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.albums.AlbumRequestBody.*;
-import static gorest.co.in.albums.AlbumResponseBody.*;
+import static gorest.co.in.albums.AlbumRequest.*;
+import static gorest.co.in.albums.AlbumResponse.*;
 
 public class AlbumTests implements AssertionMessages {
 

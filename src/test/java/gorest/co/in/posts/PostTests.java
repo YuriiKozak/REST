@@ -9,8 +9,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.posts.PostRequestBody.*;
-import static gorest.co.in.posts.PostResponseBody.*;
+import static gorest.co.in.posts.PostRequest.*;
+import static gorest.co.in.posts.PostResponse.*;
 
 public class PostTests implements AssertionMessages {
 

@@ -6,7 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static gorest.co.in.users.UserRequestBody.*;
+import static gorest.co.in.users.UserRequest.*;
 
 public class UserRequestBuilder implements BaseUrls {
     private static void setBaseURI() {
@@ -17,8 +17,8 @@ public class UserRequestBuilder implements BaseUrls {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
-        UserRequestBody userRequestBody = new UserRequestBody(user);
-        request.body(userRequestBody.getRequestBody());
+        UserRequest userRequest = new UserRequest(user);
+        request.body(userRequest.getRequestBody());
         return request.post();
     }
 

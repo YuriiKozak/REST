@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class PhotoRequestBody implements BaseRequest {
+public class PhotoRequest implements BaseRequest {
     public static final String ALBUM_ID = "album_id";
     public static final String TITLE = "title";
     public static final String URL = "url";
@@ -17,29 +17,29 @@ public class PhotoRequestBody implements BaseRequest {
         return new JSONObject(requestParams).toString();
     }
 
-    public PhotoRequestBody(Photo photo) {
+    public PhotoRequest(Photo photo) {
         setAlbumId(photo.getAlbumId());
         setTitle(photo.getTitle());
         setUrl(photo.getUrl());
         setThumbnail(photo.getThumbnail());
     }
 
-    public PhotoRequestBody setAlbumId(String albumId) {
+    public PhotoRequest setAlbumId(String albumId) {
         requestParams.put(ALBUM_ID, albumId);
         return this;
     }
 
-    public PhotoRequestBody setTitle(String title) {
+    public PhotoRequest setTitle(String title) {
         requestParams.put(TITLE, title);
         return this;
     }
 
-    public PhotoRequestBody setUrl(String url) {
+    public PhotoRequest setUrl(String url) {
         requestParams.put(URL, url);
         return this;
     }
 
-    public PhotoRequestBody setThumbnail(String thumbnail) {
+    public PhotoRequest setThumbnail(String thumbnail) {
         requestParams.put(THUMBNAIL, thumbnail);
         return this;
     }
