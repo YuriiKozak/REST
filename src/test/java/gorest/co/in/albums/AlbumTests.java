@@ -16,7 +16,7 @@ public class AlbumTests implements AssertionMessages {
 
     private Album album = new Album().createRandomAlbum();
 
-    @Test(priority = 1)
+    @Test
     public void createRandomAlbum() {
         Response response = RequestBuilder.postAlbumRequest(album);
 
@@ -39,7 +39,7 @@ public class AlbumTests implements AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"createRandomAlbum"})
+    @Test
     public void verifyRandomlyCreatedAlbum() {
         Response response = RequestBuilder.getAlbumRequest(album);
 
@@ -69,7 +69,7 @@ public class AlbumTests implements AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"verifyRandomlyCreatedAlbum"})
+    @Test
     public void deleteRandomlyCreatedAlbum() {
         Response response = RequestBuilder.deleteAlbumRequest(album);
 

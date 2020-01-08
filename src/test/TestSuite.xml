@@ -1,27 +1,45 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <suite name="TestSuite" parallel="tests" thread-count="1">
-    <test name="UserTests" >
+    <test name="UserTests">
         <classes>
-            <class name="gorest.co.in.users.UserTests"/>
+            <class name="gorest.co.in.users.UserTests">
+                <methods>
+                    <include name="createRandomUser"/>
+                    <include name="verifyRandomlyCreatedUser"/>
+                    <include name="deleteRandomlyCreatedUser"/>
+                </methods>
+            </class>
         </classes>
     </test>
-    <test name="PostTests" >
+    <test name="PostTests">
         <classes>
-            <class name="gorest.co.in.posts.PostTests"/>
+            <class name="gorest.co.in.posts.PostTests">
+                <methods>
+                    <include name="createRandomPost"/>
+                    <include name="verifyRandomlyCreatedPost"/>
+                    <include name="deleteRandomlyCreatedPost"/>
+                </methods>
+            </class>
         </classes>
     </test>
-    <test name="CommentTests" >
+    <test name="CommentTests">
         <classes>
             <class name="gorest.co.in.comments.CommentTests"/>
         </classes>
     </test>
-    <test name="AlbumTests" >
+    <test name="AlbumTests">
         <classes>
-            <class name="gorest.co.in.albums.AlbumTests"/>
+            <class name="gorest.co.in.albums.AlbumTests">
+                <methods>
+                    <include name="createRandomAlbum"/>
+                    <include name="verifyRandomlyCreatedAlbum"/>
+                    <include name="deleteRandomlyCreatedAlbum"/>
+                </methods>
+            </class>
         </classes>
     </test>
-    <test name="PhotoTests" >
+    <test name="PhotoTests">
         <classes>
             <class name="gorest.co.in.photos.PhotoTests"/>
         </classes>

@@ -18,25 +18,25 @@ public class Photo {
     }
 
     public Photo createRandomPhoto() {
-        Photo photo = new Photo();
-        photo.setAlbumId("777");
-        photo.setTitle("new photo title");
-        photo.setUrl(new Utils().randomUrl);
-        photo.setThumbnail(new Utils().randomUrl);
-        return photo;
+        return new Photo.Builder()
+                .setAlbumId("777")
+                .setTitle("new photo title")
+                .setUrl(new Utils().randomUrl)
+                .setThumbnail(new Utils().randomUrl)
+                .build();
     }
 
     public Photo returnPhotoFromResponse(Response response) {
         JSONObject jsonResult = Utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0);
 
-        Photo photo = new Photo();
-        photo.setId(jsonResult.get(ID).toString());
-        photo.setAlbumId(jsonResult.get(ALBUM_ID).toString());
-        photo.setTitle(jsonResult.get(TITLE).toString());
-        photo.setUrl(jsonResult.get(URL).toString());
-        photo.setThumbnail(jsonResult.get(THUMBNAIL).toString());
-        return photo;
+        return new Photo.Builder()
+                .setId(jsonResult.get(ID).toString())
+                .setAlbumId(jsonResult.get(ALBUM_ID).toString())
+                .setTitle(jsonResult.get(TITLE).toString())
+                .setUrl(jsonResult.get(URL).toString())
+                .setThumbnail(jsonResult.get(THUMBNAIL).toString())
+                .build();
     }
 
     public void verifyPhotos(Photo actualPhoto, Photo expectedPhoto) {
@@ -103,7 +103,7 @@ public class Photo {
         this.id = builder.id;
         this.albumId = builder.albumId;
         this.title = builder.title;
-        this.title = builder.url;
+        this.url = builder.url;
         this.thumbnail = builder.thumbnail;
     }
 

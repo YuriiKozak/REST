@@ -16,7 +16,7 @@ public class PostTests implements AssertionMessages {
 
     private Post post = new Post().createRandomPost();
 
-    @Test(priority = 1)
+    @Test
     public void createRandomPost() {
         Response response = RequestBuilder.postPostRequest(post);
 
@@ -39,7 +39,7 @@ public class PostTests implements AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"createRandomPost"})
+    @Test
     public void verifyRandomlyCreatedPost() {
         Response response = RequestBuilder.getPostRequest(post);
 
@@ -69,7 +69,7 @@ public class PostTests implements AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"verifyRandomlyCreatedPost"})
+    @Test
     public void deleteRandomlyCreatedPost() {
         Response response = RequestBuilder.deletePostRequest(post);
 

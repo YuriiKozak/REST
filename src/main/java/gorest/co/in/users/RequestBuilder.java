@@ -10,8 +10,12 @@ import static gorest.co.in.constants.BaseRequest.*;
 import static gorest.co.in.users.RequestBody.*;
 
 public class RequestBuilder implements BaseUrls {
-    public static Response postUserRequest(User user) {
+    private static void setBaseURI() {
         RestAssured.baseURI = usersURI;
+    }
+
+    public static Response postUserRequest(User user) {
+        setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
         RequestBody requestBody = new RequestBody(user);
@@ -20,7 +24,7 @@ public class RequestBuilder implements BaseUrls {
     }
 
     public static Response getUserRequest(User user) {
-        RestAssured.baseURI = usersURI;
+        setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
@@ -30,7 +34,7 @@ public class RequestBuilder implements BaseUrls {
     }
 
     public static Response deleteUserRequest(User user) {
-        RestAssured.baseURI = usersURI;
+        setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
         return request.delete(user.getId());

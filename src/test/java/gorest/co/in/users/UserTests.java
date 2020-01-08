@@ -16,7 +16,7 @@ public class UserTests implements AssertionMessages {
 
     private User user = new User().createRandomUser();
 
-    @Test(priority = 1)
+    @Test
     public void createRandomUser() {
         Response response = RequestBuilder.postUserRequest(user);
 
@@ -39,7 +39,7 @@ public class UserTests implements AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 2, dependsOnMethods={"createRandomUser"})
+    @Test
     public void verifyRandomlyCreatedUser() {
         Response response = RequestBuilder.getUserRequest(user);
 
@@ -70,7 +70,7 @@ public class UserTests implements AssertionMessages {
         Utils.printResponse(response);
     }
 
-    @Test(priority = 3, dependsOnMethods={"createRandomUser"})
+    @Test
     public void deleteRandomlyCreatedUser() {
         Response response = RequestBuilder.deleteUserRequest(user);
 

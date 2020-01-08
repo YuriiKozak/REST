@@ -18,25 +18,25 @@ public class Comment {
     }
 
     public Comment createRandomComment() {
-        Comment comment = new Comment();
-        comment.setPostId("777");
-        comment.setName("new comment name");
-        comment.setEmail(new Utils().randomEmail);
-        comment.setBody("new comment body");
-        return comment;
+        return new Comment.Builder()
+                .setPostId("777")
+                .setName("new comment name")
+                .setEmail(new Utils().randomEmail)
+                .setBody("new comment body")
+                .build();
     }
 
     public Comment returnCommentFromResponse(Response response) {
         JSONObject jsonResult = Utils.jsonObject(response)
                 .getJSONArray("result").getJSONObject(0);
 
-        Comment comment = new Comment();
-        comment.setId(jsonResult.get(ID).toString());
-        comment.setPostId(jsonResult.get(POST_ID).toString());
-        comment.setName(jsonResult.get(NAME).toString());
-        comment.setEmail(jsonResult.get(EMAIL).toString());
-        comment.setBody(jsonResult.get(BODY).toString());
-        return comment;
+        return new Comment.Builder()
+                .setId(jsonResult.get(ID).toString())
+                .setPostId(jsonResult.get(POST_ID).toString())
+                .setName(jsonResult.get(NAME).toString())
+                .setEmail(jsonResult.get(EMAIL).toString())
+                .setBody(jsonResult.get(BODY).toString())
+                .build();
     }
 
     public void verifyComments(Comment actualComment, Comment expectedComment) {
@@ -101,15 +101,15 @@ public class Comment {
 
     private Comment(Builder builder) {
         this.id = builder.id;
-        this.postId = builder.userId;
+        this.postId = builder.postId;
         this.name = builder.name;
-        this.name = builder.email;
+        this.email = builder.email;
         this.body = builder.body;
     }
 
     static class Builder {
         private String id;
-        private String userId;
+        private String postId;
         private String name;
         private String email;
         private String body;
@@ -119,8 +119,8 @@ public class Comment {
             return this;
         }
 
-        public Builder setUserId(String userId) {
-            this.userId = userId;
+        public Builder setPostId(String postId) {
+            this.postId = postId;
             return this;
         }
 

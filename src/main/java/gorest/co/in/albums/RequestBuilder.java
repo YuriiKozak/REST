@@ -10,8 +10,12 @@ import static gorest.co.in.constants.BaseRequest.*;
 import static gorest.co.in.albums.RequestBody.*;
 
 public class RequestBuilder implements BaseUrls {
-    public static Response postAlbumRequest(Album album) {
+    private static void setBaseURI() {
         RestAssured.baseURI = albumsURI;
+    }
+
+    public static Response postAlbumRequest(Album album) {
+        setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
         RequestBody requestBody = new RequestBody(album);
@@ -20,7 +24,7 @@ public class RequestBuilder implements BaseUrls {
     }
 
     public static Response getAlbumRequest(Album album) {
-        RestAssured.baseURI = albumsURI;
+        setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
@@ -30,7 +34,7 @@ public class RequestBuilder implements BaseUrls {
     }
 
     public static Response deleteAlbumRequest(Album album) {
-        RestAssured.baseURI = albumsURI;
+        setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeader.getHeaders());
         return request.delete(album.getId());
