@@ -25,7 +25,7 @@ public class PhotoTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
+        JSONObject jsonObject = Utils.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -48,9 +48,7 @@ public class PhotoTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = Utils.jsonObject(response);
-
-        JSONObject jsonResult = jsonObject.getJSONArray(RESULT).getJSONObject(0);
+        JSONObject jsonResult = Utils.jsonObjectResult(response);
 
         photo.setId(jsonResult.get(ID).toString());
         photo.setUrl(jsonResult.get(URL).toString());
@@ -58,7 +56,7 @@ public class PhotoTests {
 
         photo.verifyPhotos(photo.returnPhotoFromResponse(response), photo);
 
-        JSONObject json_meta = (JSONObject) jsonObject.get(META);
+        JSONObject json_meta = Utils.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(json_meta.get(CODE))
@@ -80,7 +78,7 @@ public class PhotoTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
+        JSONObject jsonObject = Utils.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
