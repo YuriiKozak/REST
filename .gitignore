@@ -20,7 +20,7 @@ out/
 .settings/
 
 # Maven
-Log4j/
+logs/
 test-output/
 
 # Mac
