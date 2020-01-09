@@ -1,7 +1,7 @@
 package gorest.co.in.photos;
 
-import gorest.co.in.constants.AssertionMessages;
 import gorest.co.in.constants.StatusCodes;
+import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
@@ -9,10 +9,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import static gorest.co.in.constants.AssertionMessages.*;
 import static gorest.co.in.photos.PhotoRequest.*;
 import static gorest.co.in.photos.PhotoResponse.*;
 
-public class PhotoTests implements AssertionMessages {
+public class PhotoTests {
 
     private Photo photo = new Photo().createRandomPhoto();
 
@@ -21,7 +22,7 @@ public class PhotoTests implements AssertionMessages {
         Response response = postPhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
         JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
@@ -36,7 +37,7 @@ public class PhotoTests implements AssertionMessages {
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 
     @Test
@@ -44,7 +45,7 @@ public class PhotoTests implements AssertionMessages {
         Response response = getPhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject jsonObject = Utils.jsonObject(response);
@@ -68,7 +69,7 @@ public class PhotoTests implements AssertionMessages {
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 
     @Test
@@ -76,7 +77,7 @@ public class PhotoTests implements AssertionMessages {
         Response response = deletePhotoRequest(photo);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
@@ -90,6 +91,6 @@ public class PhotoTests implements AssertionMessages {
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 }

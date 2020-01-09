@@ -1,7 +1,7 @@
 package gorest.co.in.albums;
 
-import gorest.co.in.constants.AssertionMessages;
 import gorest.co.in.constants.StatusCodes;
+import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
@@ -9,10 +9,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import static gorest.co.in.constants.AssertionMessages.*;
 import static gorest.co.in.albums.AlbumRequest.*;
 import static gorest.co.in.albums.AlbumResponse.*;
 
-public class AlbumTests implements AssertionMessages {
+public class AlbumTests {
 
     private Album album = new Album().createRandomAlbum();
 
@@ -21,7 +22,7 @@ public class AlbumTests implements AssertionMessages {
         Response response = postAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
         JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
@@ -36,7 +37,7 @@ public class AlbumTests implements AssertionMessages {
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 
     @Test
@@ -44,7 +45,7 @@ public class AlbumTests implements AssertionMessages {
         Response response = getAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject jsonObject = Utils.jsonObject(response);
@@ -66,7 +67,7 @@ public class AlbumTests implements AssertionMessages {
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class AlbumTests implements AssertionMessages {
         Response response = deleteAlbumRequest(album);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
@@ -88,6 +89,6 @@ public class AlbumTests implements AssertionMessages {
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 }

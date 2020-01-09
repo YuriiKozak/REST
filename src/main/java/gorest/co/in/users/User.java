@@ -1,5 +1,6 @@
 package gorest.co.in.users;
 
+import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
@@ -23,6 +24,7 @@ public class User {
     }
 
     public User createRandomUser() {
+        Log.info("Creating Random User.");
         return new User.Builder()
                 .setWebsite("https://gorest.co.in/")
                 .setAddress("USA")
@@ -55,6 +57,7 @@ public class User {
     }
 
     public void verifyUsers(User actualUser, User expectedUser) {
+        Log.info("Verifying Users.");
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(actualUser.getWebsite())
                 .as("Website is incorrect.")

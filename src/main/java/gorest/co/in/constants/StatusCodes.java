@@ -9,11 +9,11 @@ public enum StatusCodes {
     CREATED(201, "Created"),
     ACCEPTED(202, "Accepted"),
     NON_AUTHORITATIVE_INFORMATION(203, "Non-Authoritative Information"),
-    NO_CONTENT(204,  "No Content"),
+    NO_CONTENT(204, "No Content"),
     RESET_CONTENT(205, "Reset Content"),
     PARTIAL_CONTENT(206, "Partial Content"),
     MULTI_STATUS(207, "Multi-Status (WebDAV; RFC 4918"),
-    ALREADY_REPORTED(208, "Already Reported (WebDAV; RFC 5842)" ),
+    ALREADY_REPORTED(208, "Already Reported (WebDAV; RFC 5842)"),
     IM_USED(226, "IM Used (RFC 3229)"),
 
     MULTIPLE_CHOICES(300, "Multiple Choices"),

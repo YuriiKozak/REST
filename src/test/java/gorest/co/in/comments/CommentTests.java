@@ -1,6 +1,6 @@
 package gorest.co.in.comments;
 
-import gorest.co.in.constants.AssertionMessages;
+import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import gorest.co.in.constants.StatusCodes;
 import io.restassured.response.Response;
@@ -9,10 +9,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import static gorest.co.in.constants.AssertionMessages.*;
 import static gorest.co.in.comments.CommentRequest.*;
 import static gorest.co.in.comments.CommentResponse.*;
 
-public class CommentTests implements AssertionMessages {
+public class CommentTests {
 
     private Comment comment = new Comment().createRandomComment();
 
@@ -21,7 +22,7 @@ public class CommentTests implements AssertionMessages {
         Response response = postCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
         JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
@@ -36,7 +37,7 @@ public class CommentTests implements AssertionMessages {
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 
     @Test
@@ -44,7 +45,7 @@ public class CommentTests implements AssertionMessages {
         Response response = getCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject jsonObject = Utils.jsonObject(response);
@@ -67,7 +68,7 @@ public class CommentTests implements AssertionMessages {
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 
     @Test
@@ -75,7 +76,7 @@ public class CommentTests implements AssertionMessages {
         Response response = deleteCommentRequest(comment);
 
         Assertions.assertThat(response.getStatusCode())
-                .as(WRONG_RESPONSE_STATUS_CODE)
+                .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject jsonObject = (JSONObject) Utils.jsonObject(response).get(META);
@@ -89,6 +90,6 @@ public class CommentTests implements AssertionMessages {
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
 
-        Utils.printResponse(response);
+        Log.info(response);
     }
 }

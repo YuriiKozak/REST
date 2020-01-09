@@ -2,7 +2,7 @@ package gorest.co.in.posts;
 
 import gorest.co.in.constants.BaseRequest;
 import gorest.co.in.constants.BaseUrls;
-import gorest.co.in.headers.RequestHeader;
+import gorest.co.in.constants.RequestHeaders;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class PostRequest implements BaseRequest, BaseUrls {
+public class PostRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String USER_ID = "user_id";
     public static final String TITLE = "title";
     public static final String BODY = "body";
@@ -22,7 +22,7 @@ public class PostRequest implements BaseRequest, BaseUrls {
     public static Response postPostRequest(Post post) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         PostRequest postRequest = new PostRequest(post);
         request.body(postRequest.getRequestBody());
         return request.post();
@@ -33,7 +33,7 @@ public class PostRequest implements BaseRequest, BaseUrls {
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
+                .queryParam(ACCESS_TOKEN, accessToken)
                 .queryParam(USER_ID, post.getUserId())
                 .get();
     }
@@ -41,7 +41,7 @@ public class PostRequest implements BaseRequest, BaseUrls {
     public static Response deletePostRequest(Post post) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         return request.delete(post.getId());
     }
 

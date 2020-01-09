@@ -2,7 +2,7 @@ package gorest.co.in.albums;
 
 import gorest.co.in.constants.BaseRequest;
 import gorest.co.in.constants.BaseUrls;
-import gorest.co.in.headers.RequestHeader;
+import gorest.co.in.constants.RequestHeaders;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class AlbumRequest implements BaseRequest, BaseUrls {
+public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String USER_ID = "user_id";
     public static final String TITLE = "title";
 
@@ -21,7 +21,7 @@ public class AlbumRequest implements BaseRequest, BaseUrls {
     public static Response postAlbumRequest(Album album) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         AlbumRequest albumRequest = new AlbumRequest(album);
         request.body(albumRequest.getRequestBody());
         return request.post();
@@ -32,7 +32,7 @@ public class AlbumRequest implements BaseRequest, BaseUrls {
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
+                .queryParam(ACCESS_TOKEN, accessToken)
                 .queryParam(USER_ID, album.getUserId())
                 .get();
     }
@@ -40,7 +40,7 @@ public class AlbumRequest implements BaseRequest, BaseUrls {
     public static Response deleteAlbumRequest(Album album) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         return request.delete(album.getId());
     }
 

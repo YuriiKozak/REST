@@ -8,20 +8,19 @@
 *.ear
 
 # Intellij
-/target/
 .idea/
+target/
 out/
 *.iml
 *.iws
 
 # Eclipse
-.classpath
-.project
+.classpath/
+.project/
 .settings/
 
 # Maven
-log/
-target/
+Log4j/
 test-output/
 
 # Mac

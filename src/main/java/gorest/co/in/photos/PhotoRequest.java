@@ -2,7 +2,7 @@ package gorest.co.in.photos;
 
 import gorest.co.in.constants.BaseRequest;
 import gorest.co.in.constants.BaseUrls;
-import gorest.co.in.headers.RequestHeader;
+import gorest.co.in.constants.RequestHeaders;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class PhotoRequest implements BaseRequest, BaseUrls {
+public class PhotoRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String ALBUM_ID = "album_id";
     public static final String TITLE = "title";
     public static final String URL = "url";
@@ -23,7 +23,7 @@ public class PhotoRequest implements BaseRequest, BaseUrls {
     public static Response postPhotoRequest(Photo photo) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         PhotoRequest photoRequest = new PhotoRequest(photo);
         request.body(photoRequest.getRequestBody());
         return request.post();
@@ -34,7 +34,7 @@ public class PhotoRequest implements BaseRequest, BaseUrls {
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
+                .queryParam(ACCESS_TOKEN, accessToken)
                 .queryParam(ALBUM_ID, photo.getAlbumId())
                 .get();
     }
@@ -42,7 +42,7 @@ public class PhotoRequest implements BaseRequest, BaseUrls {
     public static Response deletePhotoRequest(Photo photo) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         return request.delete(photo.getId());
     }
 

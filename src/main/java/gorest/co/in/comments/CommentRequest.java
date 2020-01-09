@@ -2,7 +2,7 @@ package gorest.co.in.comments;
 
 import gorest.co.in.constants.BaseRequest;
 import gorest.co.in.constants.BaseUrls;
-import gorest.co.in.headers.RequestHeader;
+import gorest.co.in.constants.RequestHeaders;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class CommentRequest implements BaseRequest, BaseUrls {
+public class CommentRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String POST_ID = "post_id";
     public static final String NAME = "name";
     public static final String EMAIL = "email";
@@ -23,7 +23,7 @@ public class CommentRequest implements BaseRequest, BaseUrls {
     public static Response postCommentRequest(Comment comment) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         CommentRequest commentRequest = new CommentRequest(comment);
         request.body(commentRequest.getRequestBody());
         return request.post();
@@ -34,7 +34,7 @@ public class CommentRequest implements BaseRequest, BaseUrls {
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
+                .queryParam(ACCESS_TOKEN, accessToken)
                 .queryParam(POST_ID, comment.getPostId())
                 .get();
     }
@@ -42,7 +42,7 @@ public class CommentRequest implements BaseRequest, BaseUrls {
     public static Response deleteCommentRequest(Comment comment) {
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         return request.delete(comment.getId());
     }
 

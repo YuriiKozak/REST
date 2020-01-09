@@ -2,7 +2,8 @@ package gorest.co.in.users;
 
 import gorest.co.in.constants.BaseRequest;
 import gorest.co.in.constants.BaseUrls;
-import gorest.co.in.headers.RequestHeader;
+import gorest.co.in.constants.RequestHeaders;
+import gorest.co.in.utils.Log;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -10,7 +11,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class UserRequest implements BaseRequest, BaseUrls {
+public class UserRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String WEBSITE = "website";
     public static final String ADDRESS = "address";
     public static final String GENDER = "gender";
@@ -26,28 +27,31 @@ public class UserRequest implements BaseRequest, BaseUrls {
     }
 
     public static Response postUserRequest(User user) {
+        Log.info("Sending " + POST + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         UserRequest userRequest = new UserRequest(user);
         request.body(userRequest.getRequestBody());
         return request.post();
     }
 
     public static Response getUserRequest(User user) {
+        Log.info("Sending " + GET + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
                 .when()
-                .queryParam(ACCESS_TOKEN, RequestHeader.accessToken)
+                .queryParam(ACCESS_TOKEN, accessToken)
                 .queryParam(EMAIL, user.getEmail())
                 .get();
     }
 
     public static Response deleteUserRequest(User user) {
+        Log.info("Sending " + DELETE + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeader.getHeaders());
+        request.headers(RequestHeaders.getHeaders());
         return request.delete(user.getId());
     }
 
