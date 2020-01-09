@@ -10,16 +10,11 @@
 # Intellij
 .idea/
 target/
-out/
 
 # Eclipse
 .classpath/
 .project/
 .settings/
-
-# Maven
-logs/
-test-output/
 
 # Mac
 .DS_Store
