@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 import java.util.*;
 
+import static gorest.co.in.constants.LogMessages.*;
+
 public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String USER_ID = "user_id";
     public static final String TITLE = "title";
@@ -20,7 +22,7 @@ public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response postAlbumRequest(Album album) {
-        Log.info("Sending " + POST + " Request.");
+        Log.info(String.format(SENDING_REQUEST, POST));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());
@@ -30,7 +32,7 @@ public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response getAlbumRequest(Album album) {
-        Log.info("Sending " + GET + " Request.");
+        Log.info(String.format(SENDING_REQUEST, GET));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
@@ -41,7 +43,7 @@ public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response deleteAlbumRequest(Album album) {
-        Log.info("Sending " + DELETE + " Request.");
+        Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());

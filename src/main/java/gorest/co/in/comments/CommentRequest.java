@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 import java.util.*;
 
+import static gorest.co.in.constants.LogMessages.*;
+
 public class CommentRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String POST_ID = "post_id";
     public static final String NAME = "name";
@@ -22,7 +24,7 @@ public class CommentRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response postCommentRequest(Comment comment) {
-        Log.info("Sending " + POST + " Request.");
+        Log.info(String.format(SENDING_REQUEST, POST));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());
@@ -32,7 +34,7 @@ public class CommentRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response getCommentRequest(Comment comment) {
-        Log.info("Sending " + GET + " Request.");
+        Log.info(String.format(SENDING_REQUEST, GET));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
@@ -43,7 +45,7 @@ public class CommentRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response deleteCommentRequest(Comment comment) {
-        Log.info("Sending " + DELETE + " Request.");
+        Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());

@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 import java.util.*;
 
+import static gorest.co.in.constants.LogMessages.*;
+
 public class PhotoRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String ALBUM_ID = "album_id";
     public static final String TITLE = "title";
@@ -22,7 +24,7 @@ public class PhotoRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response postPhotoRequest(Photo photo) {
-        Log.info("Sending " + POST + " Request.");
+        Log.info(String.format(SENDING_REQUEST, POST));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());
@@ -32,7 +34,7 @@ public class PhotoRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response getPhotoRequest(Photo photo) {
-        Log.info("Sending " + GET + " Request.");
+        Log.info(String.format(SENDING_REQUEST, GET));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
@@ -43,7 +45,7 @@ public class PhotoRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response deletePhotoRequest(Photo photo) {
-        Log.info("Sending " + DELETE + " Request.");
+        Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());
