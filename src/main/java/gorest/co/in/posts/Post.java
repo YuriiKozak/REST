@@ -2,6 +2,7 @@ package gorest.co.in.posts;
 
 import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
+import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
@@ -20,6 +21,7 @@ public class Post {
     }
 
     public Post createRandomPost() {
+        Log.info("Creating Random Post.");
         Response response = UserRequest.postUserRequest(new User().createRandomUser());
         String userId = Utils.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
 
@@ -43,6 +45,7 @@ public class Post {
     }
 
     public void verifyPosts(Post actualPost, Post expectedPost) {
+        Log.info("Verifying Posts.");
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(actualPost.getId())
                 .as("Id is incorrect.")

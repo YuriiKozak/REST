@@ -14,7 +14,6 @@ import static gorest.co.in.users.UserRequest.*;
 import static gorest.co.in.users.UserResponse.*;
 
 public class UserTests {
-
     private User user = new User().createRandomUser();
 
     @Test

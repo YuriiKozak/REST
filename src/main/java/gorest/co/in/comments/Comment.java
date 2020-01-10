@@ -4,6 +4,7 @@ import gorest.co.in.posts.Post;
 import gorest.co.in.posts.PostRequest;
 import gorest.co.in.users.User;
 import gorest.co.in.users.UserRequest;
+import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
@@ -23,6 +24,7 @@ public class Comment {
     }
 
     public Comment createRandomComment() {
+        Log.info("Creating Random Comment.");
         Response user_response = UserRequest.postUserRequest(new User().createRandomUser());
         String userId = Utils.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
 
@@ -55,6 +57,7 @@ public class Comment {
     }
 
     public void verifyComments(Comment actualComment, Comment expectedComment) {
+        Log.info("Verifying Comments.");
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(actualComment.getId())
                 .as("Id is incorrect.")

@@ -14,12 +14,12 @@ import static gorest.co.in.posts.PostRequest.*;
 import static gorest.co.in.posts.PostResponse.*;
 
 public class PostTests {
-
     private Post post = new Post().createRandomPost();
 
     @Test
     public void createRandomPost() {
         Response response = postPostRequest(post);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -36,13 +36,12 @@ public class PostTests {
                 .isEqualTo("A resource was successfully created in response to a POST request. " +
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 
     @Test
     public void verifyRandomlyCreatedPost() {
         Response response = getPostRequest(post);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -64,13 +63,12 @@ public class PostTests {
                 .as(WRONG_RESPONSE_MESSAGE)
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 
     @Test
     public void deleteRandomlyCreatedPost() {
         Response response = deletePostRequest(post);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -86,7 +84,5 @@ public class PostTests {
                 .as(WRONG_RESPONSE_MESSAGE)
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 }

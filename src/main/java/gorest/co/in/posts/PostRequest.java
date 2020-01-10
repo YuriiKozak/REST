@@ -3,6 +3,7 @@ package gorest.co.in.posts;
 import gorest.co.in.constants.BaseRequest;
 import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.constants.RequestHeaders;
+import gorest.co.in.utils.Log;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -20,6 +21,7 @@ public class PostRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response postPostRequest(Post post) {
+        Log.info("Sending " + POST + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());
@@ -29,6 +31,7 @@ public class PostRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response getPostRequest(Post post) {
+        Log.info("Sending " + GET + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
@@ -39,6 +42,7 @@ public class PostRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response deletePostRequest(Post post) {
+        Log.info("Sending " + DELETE + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());

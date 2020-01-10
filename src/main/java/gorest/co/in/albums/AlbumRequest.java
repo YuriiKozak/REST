@@ -3,6 +3,7 @@ package gorest.co.in.albums;
 import gorest.co.in.constants.BaseRequest;
 import gorest.co.in.constants.BaseUrls;
 import gorest.co.in.constants.RequestHeaders;
+import gorest.co.in.utils.Log;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -19,6 +20,7 @@ public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response postAlbumRequest(Album album) {
+        Log.info("Sending " + POST + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());
@@ -28,6 +30,7 @@ public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response getAlbumRequest(Album album) {
+        Log.info("Sending " + GET + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         return request
@@ -38,6 +41,7 @@ public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public static Response deleteAlbumRequest(Album album) {
+        Log.info("Sending " + DELETE + " Request.");
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());

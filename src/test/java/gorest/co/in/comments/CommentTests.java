@@ -14,12 +14,12 @@ import static gorest.co.in.comments.CommentRequest.*;
 import static gorest.co.in.comments.CommentResponse.*;
 
 public class CommentTests {
-
     private Comment comment = new Comment().createRandomComment();
 
     @Test
     public void createRandomComment() {
         Response response = postCommentRequest(comment);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -36,13 +36,12 @@ public class CommentTests {
                 .isEqualTo("A resource was successfully created in response to a POST request. " +
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 
     @Test
     public void verifyRandomlyCreatedComment() {
         Response response = getCommentRequest(comment);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -65,13 +64,12 @@ public class CommentTests {
                 .as(WRONG_RESPONSE_MESSAGE)
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 
     @Test
     public void deleteRandomlyCreatedComment() {
         Response response = deleteCommentRequest(comment);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -87,7 +85,5 @@ public class CommentTests {
                 .as(WRONG_RESPONSE_MESSAGE)
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 }

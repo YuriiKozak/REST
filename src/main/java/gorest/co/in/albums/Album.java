@@ -2,6 +2,7 @@ package gorest.co.in.albums;
 
 import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
+import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
@@ -19,6 +20,7 @@ public class Album {
     }
 
     public Album createRandomAlbum() {
+        Log.info("Creating Random Album.");
         Response response = UserRequest.postUserRequest(new User().createRandomUser());
         String userId = Utils.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
 
@@ -40,6 +42,7 @@ public class Album {
     }
 
     public void verifyAlbums(Album actualAlbum, Album expectedAlbum) {
+        Log.info("Verifying Albums.");
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(actualAlbum.getId())
                 .as("Id is incorrect.")

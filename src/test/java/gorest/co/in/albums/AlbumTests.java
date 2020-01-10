@@ -14,12 +14,12 @@ import static gorest.co.in.albums.AlbumRequest.*;
 import static gorest.co.in.albums.AlbumResponse.*;
 
 public class AlbumTests {
-
     private Album album = new Album().createRandomAlbum();
 
     @Test
     public void createRandomAlbum() {
         Response response = postAlbumRequest(album);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -36,13 +36,12 @@ public class AlbumTests {
                 .isEqualTo("A resource was successfully created in response to a POST request. " +
                         "The Location header contains the URL pointing to the newly created resource.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 
     @Test
     public void verifyRandomlyCreatedAlbum() {
         Response response = getAlbumRequest(album);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -64,13 +63,12 @@ public class AlbumTests {
                 .as(WRONG_RESPONSE_MESSAGE)
                 .isEqualTo("OK. Everything worked as expected.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 
     @Test
     public void deleteRandomlyCreatedAlbum() {
         Response response = deleteAlbumRequest(album);
+        Log.info(response);
 
         Assertions.assertThat(response.getStatusCode())
                 .as(WRONG_RESPONSE_CODE)
@@ -86,7 +84,5 @@ public class AlbumTests {
                 .as(WRONG_RESPONSE_MESSAGE)
                 .isEqualTo("The request was handled successfully and the response contains no body content.");
         softAssertions.assertAll();
-
-        Log.info(response);
     }
 }

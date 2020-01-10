@@ -4,6 +4,7 @@ import gorest.co.in.albums.Album;
 import gorest.co.in.albums.AlbumRequest;
 import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
+import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
@@ -23,6 +24,7 @@ public class Photo {
     }
 
     public Photo createRandomPhoto() {
+        Log.info("Creating Random Photo.");
         Response user_response = UserRequest.postUserRequest(new User().createRandomUser());
         String userId = Utils.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
 
@@ -54,6 +56,7 @@ public class Photo {
     }
 
     public void verifyPhotos(Photo actualPhoto, Photo expectedPhoto) {
+        Log.info("Verifying Photos.");
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(actualPhoto.getId())
                 .as("Id is incorrect.")
