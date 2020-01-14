@@ -33,8 +33,7 @@ public class PhotoTests {
                 .isEqualTo(StatusCodes.CREATED.getCode());
         softAssertions.assertThat(jsonObject.get(MESSAGE))
                 .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("A resource was successfully created in response to a POST request. " +
-                        "The Location header contains the URL pointing to the newly created resource.");
+                .isEqualTo(A_RESOURCE_WAS_SUCCESSFULLY_CREATED);
         softAssertions.assertAll();
     }
 
@@ -63,7 +62,7 @@ public class PhotoTests {
                 .isEqualTo(StatusCodes.OK.getCode());
         softAssertions.assertThat(json_meta.get(MESSAGE))
                 .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("OK. Everything worked as expected.");
+                .isEqualTo(OK_EVERYTHING_WORKED_AS_EXPECTED);
         softAssertions.assertAll();
     }
 
@@ -84,7 +83,7 @@ public class PhotoTests {
                 .isEqualTo(StatusCodes.NO_CONTENT.getCode());
         softAssertions.assertThat(jsonObject.get(MESSAGE))
                 .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("The request was handled successfully and the response contains no body content.");
+                .isEqualTo(THE_REQUEST_WAS_HANDLED_SUCCESSFULLY);
         softAssertions.assertAll();
     }
 }

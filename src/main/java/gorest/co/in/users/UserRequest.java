@@ -49,6 +49,16 @@ public class UserRequest implements RequestHeaders, BaseRequest, BaseUrls {
                 .get();
     }
 
+    public static Response patchUserRequest(User user) {
+        Log.info(String.format(SENDING_REQUEST, PATCH));
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeaders.getHeaders());
+        UserRequest userRequest = new UserRequest(user);
+        request.body(userRequest.getRequestBody());
+        return request.patch(user.getId());
+    }
+
     public static Response deleteUserRequest(User user) {
         Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();

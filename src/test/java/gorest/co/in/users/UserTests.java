@@ -33,8 +33,7 @@ public class UserTests {
                 .isEqualTo(StatusCodes.CREATED.getCode());
         softAssertions.assertThat(jsonObject.get(MESSAGE))
                 .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("A resource was successfully created in response to a POST request. " +
-                        "The Location header contains the URL pointing to the newly created resource.");
+                .isEqualTo(A_RESOURCE_WAS_SUCCESSFULLY_CREATED);
         softAssertions.assertAll();
     }
 
@@ -61,7 +60,53 @@ public class UserTests {
                 .isEqualTo(StatusCodes.OK.getCode());
         softAssertions.assertThat(json_meta.get(MESSAGE))
                 .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("OK. Everything worked as expected.");
+                .isEqualTo(OK_EVERYTHING_WORKED_AS_EXPECTED);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    public void updateRandomlyCreatedUser() {
+        user.setEmail(new Utils().randomEmail);
+
+        Response response = patchUserRequest(user);
+        Log.info(response);
+
+        Assertions.assertThat(response.getStatusCode())
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+
+        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(jsonObject.get(CODE))
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+        softAssertions.assertThat(jsonObject.get(MESSAGE))
+                .as(WRONG_RESPONSE_MESSAGE)
+                .isEqualTo(OK_EVERYTHING_WORKED_AS_EXPECTED);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    public void verifyRandomlyUpdatedUser() {
+        Response response = getUserRequest(user);
+        Log.info(response);
+
+        Assertions.assertThat(response.getStatusCode())
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+
+        user.verifyUsers(user.returnUserFromResponse(response), user);
+
+        JSONObject json_meta = Utils.jsonObjectMeta(response);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(json_meta.get(CODE))
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+        softAssertions.assertThat(json_meta.get(MESSAGE))
+                .as(WRONG_RESPONSE_MESSAGE)
+                .isEqualTo(OK_EVERYTHING_WORKED_AS_EXPECTED);
         softAssertions.assertAll();
     }
 
@@ -82,7 +127,7 @@ public class UserTests {
                 .isEqualTo(StatusCodes.NO_CONTENT.getCode());
         softAssertions.assertThat(jsonObject.get(MESSAGE))
                 .as(WRONG_RESPONSE_MESSAGE)
-                .isEqualTo("The request was handled successfully and the response contains no body content.");
+                .isEqualTo(THE_REQUEST_WAS_HANDLED_SUCCESSFULLY);
         softAssertions.assertAll();
     }
 }

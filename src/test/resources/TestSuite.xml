@@ -10,6 +10,8 @@
                 <methods>
                     <include name="createRandomUser"/>
                     <include name="verifyRandomlyCreatedUser"/>
+                    <include name="updateRandomlyCreatedUser"/>
+                    <include name="verifyRandomlyUpdatedUser"/>
                     <include name="deleteRandomlyCreatedUser"/>
                 </methods>
             </class>
