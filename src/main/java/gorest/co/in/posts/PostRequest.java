@@ -43,6 +43,16 @@ public class PostRequest implements RequestHeaders, BaseRequest, BaseUrls {
                 .get();
     }
 
+    public static Response patchPostRequest(Post post) {
+        Log.info(String.format(SENDING_REQUEST, PATCH));
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeaders.getHeaders());
+        PostRequest postRequest = new PostRequest(post);
+        request.body(postRequest.getRequestBody());
+        return request.patch(post.getId());
+    }
+
     public static Response deletePostRequest(Post post) {
         Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();

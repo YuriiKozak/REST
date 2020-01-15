@@ -23,6 +23,8 @@
                 <methods>
                     <include name="createRandomPost"/>
                     <include name="verifyRandomlyCreatedPost"/>
+                    <include name="updateRandomlyCreatedPost"/>
+                    <include name="verifyRandomlyUpdatedPost"/>
                     <include name="deleteRandomlyCreatedPost"/>
                 </methods>
             </class>
