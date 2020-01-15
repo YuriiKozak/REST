@@ -44,6 +44,16 @@ public class CommentRequest implements RequestHeaders, BaseRequest, BaseUrls {
                 .get();
     }
 
+    public static Response patchCommentRequest(Comment comment) {
+        Log.info(String.format(SENDING_REQUEST, PATCH));
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeaders.getHeaders());
+        CommentRequest commentRequest = new CommentRequest(comment);
+        request.body(commentRequest.getRequestBody());
+        return request.patch(comment.getId());
+    }
+
     public static Response deleteCommentRequest(Comment comment) {
         Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();

@@ -36,6 +36,8 @@
                 <methods>
                     <include name="createRandomComment"/>
                     <include name="verifyRandomlyCreatedComment"/>
+                    <include name="updateRandomlyCreatedComment"/>
+                    <include name="verifyRandomlyUpdatedComment"/>
                     <include name="deleteRandomlyCreatedComment"/>
                 </methods>
             </class>
