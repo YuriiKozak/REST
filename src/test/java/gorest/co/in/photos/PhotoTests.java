@@ -67,6 +67,52 @@ public class PhotoTests {
     }
 
     @Test
+    public void updateRandomlyCreatedPhoto() {
+        photo.setTitle("updated photo title");
+
+        Response response = patchPhotoRequest(photo);
+        Log.info(response);
+
+        Assertions.assertThat(response.getStatusCode())
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+
+        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(jsonObject.get(CODE))
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+        softAssertions.assertThat(jsonObject.get(MESSAGE))
+                .as(WRONG_RESPONSE_MESSAGE)
+                .isEqualTo(OK_EVERYTHING_WORKED_AS_EXPECTED);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    public void verifyRandomlyUpdatedPhoto() {
+        Response response = getPhotoRequest(photo);
+        Log.info(response);
+
+        Assertions.assertThat(response.getStatusCode())
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+
+        photo.verifyPhotos(photo.returnPhotoFromResponse(response), photo);
+
+        JSONObject json_meta = Utils.jsonObjectMeta(response);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(json_meta.get(CODE))
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+        softAssertions.assertThat(json_meta.get(MESSAGE))
+                .as(WRONG_RESPONSE_MESSAGE)
+                .isEqualTo(OK_EVERYTHING_WORKED_AS_EXPECTED);
+        softAssertions.assertAll();
+    }
+
+    @Test
     public void deleteRandomlyCreatedPhoto() {
         Response response = deletePhotoRequest(photo);
         Log.info(response);

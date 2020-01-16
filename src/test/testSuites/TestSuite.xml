@@ -62,6 +62,8 @@
                 <methods>
                     <include name="createRandomPhoto"/>
                     <include name="verifyRandomlyCreatedPhoto"/>
+                    <include name="updateRandomlyCreatedPhoto"/>
+                    <include name="verifyRandomlyUpdatedPhoto"/>
                     <include name="deleteRandomlyCreatedPhoto"/>
                 </methods>
             </class>

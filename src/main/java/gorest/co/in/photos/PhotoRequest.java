@@ -44,6 +44,16 @@ public class PhotoRequest implements RequestHeaders, BaseRequest, BaseUrls {
                 .get();
     }
 
+    public static Response patchPhotoRequest(Photo photo) {
+        Log.info(String.format(SENDING_REQUEST, PATCH));
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeaders.getHeaders());
+        PhotoRequest photoRequest = new PhotoRequest(photo);
+        request.body(photoRequest.getRequestBody());
+        return request.patch(photo.getId());
+    }
+
     public static Response deletePhotoRequest(Photo photo) {
         Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();
