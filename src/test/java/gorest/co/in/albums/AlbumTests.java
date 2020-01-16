@@ -65,6 +65,52 @@ public class AlbumTests {
     }
 
     @Test
+    public void updateRandomlyCreatedAlbum() {
+        album.setTitle("updated album title");
+
+        Response response = patchAlbumRequest(album);
+        Log.info(response);
+
+        Assertions.assertThat(response.getStatusCode())
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+
+        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(jsonObject.get(CODE))
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+        softAssertions.assertThat(jsonObject.get(MESSAGE))
+                .as(WRONG_RESPONSE_MESSAGE)
+                .isEqualTo(OK_EVERYTHING_WORKED_AS_EXPECTED);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    public void verifyRandomlyUpdatedAlbum() {
+        Response response = getAlbumRequest(album);
+        Log.info(response);
+
+        Assertions.assertThat(response.getStatusCode())
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+
+        album.verifyAlbums(album.returnAlbumFromResponse(response), album);
+
+        JSONObject json_meta = Utils.jsonObjectMeta(response);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(json_meta.get(CODE))
+                .as(WRONG_RESPONSE_CODE)
+                .isEqualTo(StatusCodes.OK.getCode());
+        softAssertions.assertThat(json_meta.get(MESSAGE))
+                .as(WRONG_RESPONSE_MESSAGE)
+                .isEqualTo(OK_EVERYTHING_WORKED_AS_EXPECTED);
+        softAssertions.assertAll();
+    }
+
+    @Test
     public void deleteRandomlyCreatedAlbum() {
         Response response = deleteAlbumRequest(album);
         Log.info(response);

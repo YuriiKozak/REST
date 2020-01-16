@@ -42,6 +42,16 @@ public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
                 .get();
     }
 
+    public static Response patchAlbumRequest(Album album) {
+        Log.info(String.format(SENDING_REQUEST, PATCH));
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        request.headers(RequestHeaders.getHeaders());
+        AlbumRequest albumRequest = new AlbumRequest(album);
+        request.body(albumRequest.getRequestBody());
+        return request.patch(album.getId());
+    }
+
     public static Response deleteAlbumRequest(Album album) {
         Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();

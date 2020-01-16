@@ -49,6 +49,8 @@
                 <methods>
                     <include name="createRandomAlbum"/>
                     <include name="verifyRandomlyCreatedAlbum"/>
+                    <include name="updateRandomlyCreatedAlbum"/>
+                    <include name="verifyRandomlyUpdatedAlbum"/>
                     <include name="deleteRandomlyCreatedAlbum"/>
                 </methods>
             </class>
