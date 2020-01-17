@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
+import static gorest.co.in.users.UserResponse.*;
 import static gorest.co.in.users.UserRequest.*;
 
 public class User {
@@ -13,10 +14,11 @@ public class User {
     private String address;
     private String gender;
     private String phone;
+    private Links _links;
     private String dob;
-    private String lastName;
+    private String last_name;
     private String id;
-    private String firstName;
+    private String first_name;
     private String email;
     private String status;
 
@@ -26,7 +28,7 @@ public class User {
     public User createRandomUser() {
         Log.info("Creating Random User.");
         return new User.Builder()
-                .setWebsite("https://gorest.co.in/")
+                .setWebsite("https://gorest.co.in/website")
                 .setAddress("USA")
                 .setGender("male")
                 .setPhone("777.555.333")
@@ -35,12 +37,13 @@ public class User {
                 .setFirstName("John")
                 .setEmail(new Utils().randomEmail)
                 .setStatus("active")
+                .setAvatar("https://gorest.co.in/avatar")
                 .build();
     }
 
     public User returnUserFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response)
-                .getJSONArray("result").getJSONObject(0);
+        JSONObject jsonResult = Utils.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
+        JSONObject jsonLinks = jsonResult.getJSONObject(LINKS);
 
         return new User.Builder()
                 .setWebsite(jsonResult.get(WEBSITE).toString())
@@ -53,6 +56,9 @@ public class User {
                 .setFirstName(jsonResult.get(FIRST_NAME).toString())
                 .setEmail(jsonResult.get(EMAIL).toString())
                 .setStatus(jsonResult.get(STATUS).toString())
+                .setAvatar(jsonLinks.getJSONObject(EDIT).get("href").toString())
+                .setAvatar(jsonLinks.getJSONObject(SELF).get("href").toString())
+                .setAvatar(jsonLinks.getJSONObject(AVATAR).get("href").toString())
                 .build();
     }
 
@@ -89,6 +95,15 @@ public class User {
         softAssertions.assertThat(actualUser.getStatus())
                 .as("Status is incorrect.")
                 .isEqualTo(expectedUser.getStatus());
+        softAssertions.assertThat(actualUser.getEdit())
+                .as("Edit is incorrect.")
+                .isEqualTo(expectedUser.getEdit());
+        softAssertions.assertThat(actualUser.getSelf())
+                .as("Self is incorrect.")
+                .isEqualTo(expectedUser.getSelf());
+        softAssertions.assertThat(actualUser.getAvatar())
+                .as("Avatar is incorrect.")
+                .isEqualTo(expectedUser.getAvatar());
         softAssertions.assertAll();
     }
 
@@ -133,11 +148,11 @@ public class User {
     }
 
     public String getLastName() {
-        return lastName;
+        return last_name;
     }
 
     public void setLastName(String last_name) {
-        this.lastName = last_name;
+        this.last_name = last_name;
     }
 
     public String getId() {
@@ -149,11 +164,11 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName;
+        return first_name;
     }
 
     public void setFirstName(String first_name) {
-        this.firstName = first_name;
+        this.first_name = first_name;
     }
 
     public String getEmail() {
@@ -172,17 +187,42 @@ public class User {
         this.status = status;
     }
 
+    public String getEdit() {
+        return Edit.getHref();
+    }
+
+    public void setEdit(String edit) {
+        Edit.setHref(edit);
+    }
+
+    public String getSelf() {
+        return Self.getHref();
+    }
+
+    public void setSelf(String self) {
+        Self.setHref(self);
+    }
+
+    public String getAvatar() {
+        return Avatar.getHref();
+    }
+
+    public void setAvatar(String avatar) {
+        Avatar.setHref(avatar);
+    }
+
     private User(Builder builder) {
         this.website = builder.website;
         this.address = builder.address;
         this.gender = builder.gender;
         this.phone = builder.phone;
         this.dob = builder.dob;
-        this.lastName = builder.lastName;
+        this.last_name = builder.lastName;
         this.id = builder.id;
-        this.firstName = builder.firstName;
+        this.first_name = builder.firstName;
         this.email = builder.email;
         this.status = builder.status;
+        Avatar.setHref(builder.avatar);
     }
 
     public static class Builder {
@@ -196,6 +236,7 @@ public class User {
         private String firstName;
         private String email;
         private String status;
+        private String avatar;
 
         public Builder setWebsite(String website) {
             this.website = website;
@@ -247,8 +288,55 @@ public class User {
             return this;
         }
 
+        public Builder setAvatar(String avatar) {
+            this.avatar = avatar;
+            return this;
+        }
+
         public User build() {
             return new User(this);
         }
+    }
+}
+
+class Links {
+    private Edit edit;
+    private Self self;
+    private Avatar avatar;
+}
+
+class Edit {
+    private static String href;
+
+    public static String getHref() {
+        return href;
+    }
+
+    public static void setHref(String href) {
+        Edit.href = href;
+    }
+}
+
+class Self {
+    private static String href;
+
+    public static String getHref() {
+        return href;
+    }
+
+    public static void setHref(String href) {
+        Self.href = href;
+    }
+}
+
+class Avatar {
+    private static String href;
+
+    public static String getHref() {
+        return href;
+    }
+
+    public static void setHref(String href) {
+        Avatar.href = href;
     }
 }

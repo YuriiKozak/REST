@@ -10,7 +10,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
-import static gorest.co.in.constants.BaseResponse.*;
+import static gorest.co.in.photos.PhotoResponse.*;
 import static gorest.co.in.photos.PhotoRequest.*;
 
 public class Photo {
@@ -43,8 +43,7 @@ public class Photo {
     }
 
     public Photo returnPhotoFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response)
-                .getJSONArray("result").getJSONObject(0);
+        JSONObject jsonResult = Utils.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
 
         return new Photo.Builder()
                 .setId(jsonResult.get(ID).toString())

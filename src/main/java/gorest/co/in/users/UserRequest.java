@@ -18,11 +18,15 @@ public class UserRequest implements RequestHeaders, BaseRequest, BaseUrls {
     public static final String ADDRESS = "address";
     public static final String GENDER = "gender";
     public static final String PHONE = "phone";
+    public static final String LINKS = "_links";
     public static final String DOB = "dob";
     public static final String LAST_NAME = "last_name";
     public static final String FIRST_NAME = "first_name";
     public static final String EMAIL = "email";
     public static final String STATUS = "status";
+    public static final String EDIT = "edit";
+    public static final String SELF = "self";
+    public static final String AVATAR = "avatar";
 
     private static void setBaseURI() {
         RestAssured.baseURI = usersURI;
@@ -47,6 +51,16 @@ public class UserRequest implements RequestHeaders, BaseRequest, BaseUrls {
                 .queryParam(ACCESS_TOKEN, accessToken)
                 .queryParam(EMAIL, user.getEmail())
                 .get();
+    }
+
+    public static Response getUserRequest(String id) {
+        Log.info(String.format(SENDING_REQUEST, GET));
+        setBaseURI();
+        RequestSpecification request = RestAssured.given();
+        return request
+                .when()
+                .queryParam(ACCESS_TOKEN, accessToken)
+                .get(id);
     }
 
     public static Response patchUserRequest(User user) {
@@ -83,6 +97,7 @@ public class UserRequest implements RequestHeaders, BaseRequest, BaseUrls {
         setFirstName(user.getFirstName());
         setEmail(user.getEmail());
         setStatus(user.getStatus());
+        setAvatar(user.getAvatar());
     }
 
     public UserRequest setWebsite(String website) {
@@ -127,6 +142,11 @@ public class UserRequest implements RequestHeaders, BaseRequest, BaseUrls {
 
     public UserRequest setStatus(String status) {
         requestParams.put(STATUS, status);
+        return this;
+    }
+
+    public UserRequest setAvatar(String avatar) {
+        requestParams.put(AVATAR, avatar);
         return this;
     }
 }

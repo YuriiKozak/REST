@@ -10,8 +10,8 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
+import static gorest.co.in.comments.CommentResponse.*;
 import static gorest.co.in.comments.CommentRequest.*;
-import static gorest.co.in.constants.BaseResponse.*;
 
 public class Comment {
     private String id;
@@ -44,8 +44,7 @@ public class Comment {
     }
 
     public Comment returnCommentFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response)
-                .getJSONArray("result").getJSONObject(0);
+        JSONObject jsonResult = Utils.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
 
         return new Comment.Builder()
                 .setId(jsonResult.get(ID).toString())

@@ -8,8 +8,8 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
 
+import static gorest.co.in.albums.AlbumResponse.*;
 import static gorest.co.in.albums.AlbumRequest.*;
-import static gorest.co.in.constants.BaseResponse.*;
 
 public class Album {
     private String id;
@@ -31,8 +31,7 @@ public class Album {
     }
 
     public Album returnAlbumFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response)
-                .getJSONArray("result").getJSONObject(0);
+        JSONObject jsonResult = Utils.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
 
         return new Album.Builder()
                 .setId(jsonResult.get(ID).toString())

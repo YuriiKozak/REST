@@ -4,6 +4,11 @@
     <listeners>
         <listener class-name="gorest.co.in.utils.Listener"/>
     </listeners>
+    <test name="JsonTests">
+        <classes>
+            <class name="gorest.co.in.json.JsonTests"/>
+        </classes>
+    </test>
     <test name="UserTests">
         <classes>
             <class name="gorest.co.in.users.UserTests">

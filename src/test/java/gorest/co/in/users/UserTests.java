@@ -47,8 +47,11 @@ public class UserTests {
                 .isEqualTo(StatusCodes.OK.getCode());
 
         JSONObject jsonResult = Utils.jsonObjectResult(response);
-
         user.setId(jsonResult.get(ID).toString());
+
+        JSONObject jsonLinks = jsonResult.getJSONObject(LINKS);
+        user.setEdit(jsonLinks.getJSONObject(EDIT).get("href").toString());
+        user.setSelf(jsonLinks.getJSONObject(SELF).get("href").toString());
 
         user.verifyUsers(user.returnUserFromResponse(response), user);
 
