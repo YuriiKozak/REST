@@ -6,7 +6,7 @@
     </listeners>
     <test name="JsonTests">
         <classes>
-            <class name="gorest.co.in.json.JsonTests"/>
+            <class name="gorest.co.in.users.JsonTests"/>
         </classes>
     </test>
     <test name="UserTests">

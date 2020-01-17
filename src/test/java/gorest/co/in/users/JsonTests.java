@@ -1,7 +1,6 @@
-package gorest.co.in.json;
+package gorest.co.in.users;
 
 import com.google.gson.Gson;
-import gorest.co.in.users.User;
 import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
@@ -13,7 +12,7 @@ import static gorest.co.in.users.UserRequest.*;
 
 public class JsonTests {
     @Test
-    public void getUserById() {
+    public void getUserJson() {
         User randomUser = new User().createRandomUser();
         postUserRequest(randomUser);
 
@@ -21,8 +20,9 @@ public class JsonTests {
         JSONObject jsonResult = Utils.jsonObjectResult(postResponse);
         randomUser.setId(jsonResult.get(ID).toString());
         JSONObject jsonLinks = jsonResult.getJSONObject(LINKS);
-        randomUser.setEdit(jsonLinks.getJSONObject(EDIT).get("href").toString());
-        randomUser.setSelf(jsonLinks.getJSONObject(SELF).get("href").toString());
+        randomUser.setLinks(new Links(new Edit(jsonLinks.getJSONObject(EDIT).get("href").toString()),
+                new Self(jsonLinks.getJSONObject(SELF).get("href").toString()),
+                new Avatar(jsonLinks.getJSONObject(AVATAR).get("href").toString())));
         randomUser.verifyUsers(randomUser.returnUserFromResponse(postResponse), randomUser);
 
         Response response = getUserRequest(randomUser.getId());
@@ -43,8 +43,8 @@ public class JsonTests {
         Log.info(user.getEmail());
         Log.info(user.getStatus());
 
-        Log.info(user.getEdit());
-        Log.info(user.getSelf());
-        Log.info(user.getAvatar());
+        Log.info(user.getLinks().getEdit().getHref());
+        Log.info(user.getLinks().getSelf().getHref());
+        Log.info(user.getLinks().getAvatar().getHref());
     }
 }

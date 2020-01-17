@@ -50,8 +50,9 @@ public class UserTests {
         user.setId(jsonResult.get(ID).toString());
 
         JSONObject jsonLinks = jsonResult.getJSONObject(LINKS);
-        user.setEdit(jsonLinks.getJSONObject(EDIT).get("href").toString());
-        user.setSelf(jsonLinks.getJSONObject(SELF).get("href").toString());
+        user.setLinks(new Links(new Edit(jsonLinks.getJSONObject(EDIT).get("href").toString()),
+                new Self(jsonLinks.getJSONObject(SELF).get("href").toString()),
+                new Avatar(jsonLinks.getJSONObject(AVATAR).get("href").toString())));
 
         user.verifyUsers(user.returnUserFromResponse(response), user);
 

@@ -37,7 +37,8 @@ public class User {
                 .setFirstName("John")
                 .setEmail(new Utils().randomEmail)
                 .setStatus("active")
-                .setAvatar("https://gorest.co.in/avatar")
+                .setLinks(new Links(new Edit(), new Self(),
+                        new Avatar("https://gorest.co.in/avatar")))
                 .build();
     }
 
@@ -56,9 +57,9 @@ public class User {
                 .setFirstName(jsonResult.get(FIRST_NAME).toString())
                 .setEmail(jsonResult.get(EMAIL).toString())
                 .setStatus(jsonResult.get(STATUS).toString())
-                .setAvatar(jsonLinks.getJSONObject(EDIT).get("href").toString())
-                .setAvatar(jsonLinks.getJSONObject(SELF).get("href").toString())
-                .setAvatar(jsonLinks.getJSONObject(AVATAR).get("href").toString())
+                .setLinks(new Links(new Edit(jsonLinks.getJSONObject(EDIT).get("href").toString()),
+                        new Self(jsonLinks.getJSONObject(SELF).get("href").toString()),
+                        new Avatar(jsonLinks.getJSONObject(AVATAR).get("href").toString())))
                 .build();
     }
 
@@ -95,15 +96,15 @@ public class User {
         softAssertions.assertThat(actualUser.getStatus())
                 .as("Status is incorrect.")
                 .isEqualTo(expectedUser.getStatus());
-        softAssertions.assertThat(actualUser.getEdit())
+        softAssertions.assertThat(actualUser.getLinks().getEdit().getHref())
                 .as("Edit is incorrect.")
-                .isEqualTo(expectedUser.getEdit());
-        softAssertions.assertThat(actualUser.getSelf())
+                .isEqualTo(expectedUser.getLinks().getEdit().getHref());
+        softAssertions.assertThat(actualUser.getLinks().getSelf().getHref())
                 .as("Self is incorrect.")
-                .isEqualTo(expectedUser.getSelf());
-        softAssertions.assertThat(actualUser.getAvatar())
+                .isEqualTo(expectedUser.getLinks().getSelf().getHref());
+        softAssertions.assertThat(actualUser.getLinks().getAvatar().getHref())
                 .as("Avatar is incorrect.")
-                .isEqualTo(expectedUser.getAvatar());
+                .isEqualTo(expectedUser.getLinks().getAvatar().getHref());
         softAssertions.assertAll();
     }
 
@@ -187,28 +188,12 @@ public class User {
         this.status = status;
     }
 
-    public String getEdit() {
-        return Edit.getHref();
+    public Links getLinks() {
+        return _links;
     }
 
-    public void setEdit(String edit) {
-        Edit.setHref(edit);
-    }
-
-    public String getSelf() {
-        return Self.getHref();
-    }
-
-    public void setSelf(String self) {
-        Self.setHref(self);
-    }
-
-    public String getAvatar() {
-        return Avatar.getHref();
-    }
-
-    public void setAvatar(String avatar) {
-        Avatar.setHref(avatar);
+    public void setLinks(Links _links) {
+        this._links = _links;
     }
 
     private User(Builder builder) {
@@ -222,7 +207,7 @@ public class User {
         this.first_name = builder.firstName;
         this.email = builder.email;
         this.status = builder.status;
-        Avatar.setHref(builder.avatar);
+        this._links = builder.links;
     }
 
     public static class Builder {
@@ -236,7 +221,7 @@ public class User {
         private String firstName;
         private String email;
         private String status;
-        private String avatar;
+        private Links links;
 
         public Builder setWebsite(String website) {
             this.website = website;
@@ -288,8 +273,8 @@ public class User {
             return this;
         }
 
-        public Builder setAvatar(String avatar) {
-            this.avatar = avatar;
+        public Builder setLinks(Links links) {
+            this.links = links;
             return this;
         }
 
@@ -303,40 +288,88 @@ class Links {
     private Edit edit;
     private Self self;
     private Avatar avatar;
+
+    public Links(Edit edit, Self self, Avatar avatar) {
+        setEdit(edit);
+        setSelf(self);
+        setAvatar(avatar);
+    }
+
+    public Edit getEdit() {
+        return edit;
+    }
+
+    public void setEdit(Edit edit) {
+        this.edit = edit;
+    }
+
+    public Self getSelf() {
+        return self;
+    }
+
+    public void setSelf(Self self) {
+        this.self = self;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
 }
 
 class Edit {
-    private static String href;
+    private String href;
 
-    public static String getHref() {
+    public Edit(String href) {
+        setHref(href);
+    }
+
+    public Edit() {
+    }
+
+    public String getHref() {
         return href;
     }
 
-    public static void setHref(String href) {
-        Edit.href = href;
+    public void setHref(String href) {
+        this.href = href;
     }
 }
 
 class Self {
-    private static String href;
+    private String href;
 
-    public static String getHref() {
+    public Self(String href) {
+        setHref(href);
+    }
+
+    public Self() {
+    }
+
+    public String getHref() {
         return href;
     }
 
-    public static void setHref(String href) {
-        Self.href = href;
+    public void setHref(String href) {
+        this.href = href;
     }
 }
 
 class Avatar {
-    private static String href;
+    private String href;
 
-    public static String getHref() {
+    public Avatar(String href) {
+        setHref(href);
+    }
+
+    public String getHref() {
         return href;
     }
 
-    public static void setHref(String href) {
-        Avatar.href = href;
+    public void setHref(String href) {
+        this.href = href;
     }
 }

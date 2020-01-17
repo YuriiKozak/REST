@@ -97,7 +97,7 @@ public class UserRequest implements RequestHeaders, BaseRequest, BaseUrls {
         setFirstName(user.getFirstName());
         setEmail(user.getEmail());
         setStatus(user.getStatus());
-        setAvatar(user.getAvatar());
+        setAvatar(user.getLinks().getAvatar().getHref());
     }
 
     public UserRequest setWebsite(String website) {
