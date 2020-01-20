@@ -1,13 +1,16 @@
 package gorest.co.in.users;
 
 import com.google.gson.Gson;
+import gorest.co.in.utils.JsonToMap;
 import gorest.co.in.utils.Log;
 import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import static gorest.co.in.constants.BaseResponse.*;
+import java.util.*;
+
+import static gorest.co.in.users.UserResponse.*;
 import static gorest.co.in.users.UserRequest.*;
 
 public class JsonTests {
@@ -46,5 +49,8 @@ public class JsonTests {
         Log.info(user.getLinks().getEdit().getHref());
         Log.info(user.getLinks().getSelf().getHref());
         Log.info(user.getLinks().getAvatar().getHref());
+
+        HashMap<String, Object> hashMap = new HashMap<>(Objects.requireNonNull(JsonToMap.jsonToMap(result)));
+        Log.info(hashMap.toString());
     }
 }
