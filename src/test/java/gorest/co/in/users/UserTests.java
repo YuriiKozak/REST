@@ -2,7 +2,7 @@ package gorest.co.in.users;
 
 import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.JsonObject;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -25,7 +25,7 @@ public class UserTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -46,7 +46,7 @@ public class UserTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonResult = Utils.jsonObjectResult(response);
+        JSONObject jsonResult = JsonObject.jsonObjectResult(response);
         user.setId(jsonResult.get(ID).toString());
 
         JSONObject jsonLinks = jsonResult.getJSONObject(LINKS);
@@ -54,9 +54,9 @@ public class UserTests {
                 new Self(jsonLinks.getJSONObject(SELF).get("href").toString()),
                 new Avatar(jsonLinks.getJSONObject(AVATAR).get("href").toString())));
 
-        user.verifyUsers(user.returnUserFromResponse(response), user);
+        UserSteps.verifyUsers(UserSteps.returnUserFromResponse(response), user);
 
-        JSONObject json_meta = Utils.jsonObjectMeta(response);
+        JSONObject json_meta = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(json_meta.get(CODE))
@@ -70,7 +70,7 @@ public class UserTests {
 
     @Test
     public void updateRandomlyCreatedUser() {
-        user.setEmail(new Utils().randomEmail);
+        user.setEmail(new JsonObject().randomEmail);
 
         Response response = patchUserRequest(user);
         Log.info(response);
@@ -79,7 +79,7 @@ public class UserTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -100,9 +100,9 @@ public class UserTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        user.verifyUsers(user.returnUserFromResponse(response), user);
+        UserSteps.verifyUsers(UserSteps.returnUserFromResponse(response), user);
 
-        JSONObject json_meta = Utils.jsonObjectMeta(response);
+        JSONObject json_meta = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(json_meta.get(CODE))
@@ -123,7 +123,7 @@ public class UserTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))

@@ -3,7 +3,7 @@ package gorest.co.in.albums;
 import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
 import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.JsonObject;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
@@ -22,7 +22,7 @@ public class Album {
     public Album createRandomAlbum() {
         Log.info("Creating Random Album.");
         Response response = UserRequest.postUserRequest(new User().createRandomUser());
-        String userId = Utils.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
+        String userId = JsonObject.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
 
         return new Album.Builder()
                 .setUserId(userId)
@@ -31,7 +31,7 @@ public class Album {
     }
 
     public Album returnAlbumFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
+        JSONObject jsonResult = JsonObject.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
 
         return new Album.Builder()
                 .setId(jsonResult.get(ID).toString())

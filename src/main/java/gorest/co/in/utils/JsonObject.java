@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import static gorest.co.in.constants.BaseResponse.*;
 
-public class Utils {
+public class JsonObject {
     public String randomEmail = System.currentTimeMillis() + "@gmail.com";
     public String randomUrl = "https://random.com/" + System.currentTimeMillis();
 

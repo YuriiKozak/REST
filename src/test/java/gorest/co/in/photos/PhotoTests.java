@@ -2,7 +2,7 @@ package gorest.co.in.photos;
 
 import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.JsonObject;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -25,7 +25,7 @@ public class PhotoTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -46,7 +46,7 @@ public class PhotoTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonResult = Utils.jsonObjectResult(response);
+        JSONObject jsonResult = JsonObject.jsonObjectResult(response);
 
         photo.setId(jsonResult.get(ID).toString());
         photo.setUrl(jsonResult.get(URL).toString());
@@ -54,7 +54,7 @@ public class PhotoTests {
 
         photo.verifyPhotos(photo.returnPhotoFromResponse(response), photo);
 
-        JSONObject json_meta = Utils.jsonObjectMeta(response);
+        JSONObject json_meta = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(json_meta.get(CODE))
@@ -77,7 +77,7 @@ public class PhotoTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -100,7 +100,7 @@ public class PhotoTests {
 
         photo.verifyPhotos(photo.returnPhotoFromResponse(response), photo);
 
-        JSONObject json_meta = Utils.jsonObjectMeta(response);
+        JSONObject json_meta = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(json_meta.get(CODE))
@@ -121,7 +121,7 @@ public class PhotoTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))

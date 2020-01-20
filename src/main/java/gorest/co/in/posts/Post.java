@@ -3,7 +3,7 @@ package gorest.co.in.posts;
 import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
 import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.JsonObject;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
@@ -23,7 +23,7 @@ public class Post {
     public Post createRandomPost() {
         Log.info("Creating Random Post.");
         Response response = UserRequest.postUserRequest(new User().createRandomUser());
-        String userId = Utils.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
+        String userId = JsonObject.jsonObject(response).getJSONObject(RESULT).get(ID).toString();
 
         return new Post.Builder()
                 .setUserId(userId)
@@ -33,7 +33,7 @@ public class Post {
     }
 
     public Post returnPostFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
+        JSONObject jsonResult = JsonObject.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
 
         return new Post.Builder()
                 .setId(jsonResult.get(ID).toString())

@@ -5,7 +5,7 @@ import gorest.co.in.posts.PostRequest;
 import gorest.co.in.users.User;
 import gorest.co.in.users.UserRequest;
 import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.JsonObject;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
@@ -26,25 +26,25 @@ public class Comment {
     public Comment createRandomComment() {
         Log.info("Creating Random Comment.");
         Response user_response = UserRequest.postUserRequest(new User().createRandomUser());
-        String userId = Utils.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
+        String userId = JsonObject.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
 
         Response post_response = PostRequest.postPostRequest(new Post.Builder()
                 .setUserId(userId)
                 .setTitle("new post title")
                 .setBody("new post body")
                 .build());
-        String postId = Utils.jsonObject(post_response).getJSONObject(RESULT).get(ID).toString();
+        String postId = JsonObject.jsonObject(post_response).getJSONObject(RESULT).get(ID).toString();
 
         return new Comment.Builder()
                 .setPostId(postId)
                 .setName("new comment name")
-                .setEmail(new Utils().randomEmail)
+                .setEmail(new JsonObject().randomEmail)
                 .setBody("new comment body")
                 .build();
     }
 
     public Comment returnCommentFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
+        JSONObject jsonResult = JsonObject.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
 
         return new Comment.Builder()
                 .setId(jsonResult.get(ID).toString())

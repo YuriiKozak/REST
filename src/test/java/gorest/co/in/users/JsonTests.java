@@ -3,7 +3,7 @@ package gorest.co.in.users;
 import com.google.gson.Gson;
 import gorest.co.in.utils.JsonToMap;
 import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.JsonObject;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
@@ -20,19 +20,19 @@ public class JsonTests {
         postUserRequest(randomUser);
 
         Response postResponse = getUserRequest(randomUser);
-        JSONObject jsonResult = Utils.jsonObjectResult(postResponse);
+        JSONObject jsonResult = JsonObject.jsonObjectResult(postResponse);
         randomUser.setId(jsonResult.get(ID).toString());
         JSONObject jsonLinks = jsonResult.getJSONObject(LINKS);
         randomUser.setLinks(new Links(new Edit(jsonLinks.getJSONObject(EDIT).get("href").toString()),
                 new Self(jsonLinks.getJSONObject(SELF).get("href").toString()),
                 new Avatar(jsonLinks.getJSONObject(AVATAR).get("href").toString())));
-        randomUser.verifyUsers(randomUser.returnUserFromResponse(postResponse), randomUser);
+        UserSteps.verifyUsers(UserSteps.returnUserFromResponse(postResponse), randomUser);
 
         Response response = getUserRequest(randomUser.getId());
         Log.info(response);
 
         Gson gson = new Gson();
-        String result = Utils.jsonObject(response).getJSONObject(RESULT).toString();
+        String result = JsonObject.jsonObject(response).getJSONObject(RESULT).toString();
         User user = gson.fromJson(result, User.class);
 
         Log.info(user.getWebsite());

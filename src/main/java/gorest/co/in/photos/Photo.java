@@ -5,7 +5,7 @@ import gorest.co.in.albums.AlbumRequest;
 import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
 import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.JsonObject;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
@@ -26,24 +26,24 @@ public class Photo {
     public Photo createRandomPhoto() {
         Log.info("Creating Random Photo.");
         Response user_response = UserRequest.postUserRequest(new User().createRandomUser());
-        String userId = Utils.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
+        String userId = JsonObject.jsonObject(user_response).getJSONObject(RESULT).get(ID).toString();
 
         Response album_response = AlbumRequest.postAlbumRequest(new Album.Builder()
                 .setUserId(userId)
                 .setTitle("new album title")
                 .build());
-        String albumId = Utils.jsonObject(album_response).getJSONObject(RESULT).get(ID).toString();
+        String albumId = JsonObject.jsonObject(album_response).getJSONObject(RESULT).get(ID).toString();
 
         return new Photo.Builder()
                 .setAlbumId(albumId)
                 .setTitle("new photo title")
-                .setUrl(new Utils().randomUrl)
-                .setThumbnail(new Utils().randomUrl)
+                .setUrl(new JsonObject().randomUrl)
+                .setThumbnail(new JsonObject().randomUrl)
                 .build();
     }
 
     public Photo returnPhotoFromResponse(Response response) {
-        JSONObject jsonResult = Utils.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
+        JSONObject jsonResult = JsonObject.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
 
         return new Photo.Builder()
                 .setId(jsonResult.get(ID).toString())

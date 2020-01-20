@@ -2,7 +2,7 @@ package gorest.co.in.posts;
 
 import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.JsonObject;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -25,7 +25,7 @@ public class PostTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.FOUND.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -46,13 +46,13 @@ public class PostTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonResult = Utils.jsonObjectResult(response);
+        JSONObject jsonResult = JsonObject.jsonObjectResult(response);
 
         post.setId(jsonResult.get(ID).toString());
 
         post.verifyPosts(post.returnPostFromResponse(response), post);
 
-        JSONObject json_meta = Utils.jsonObjectMeta(response);
+        JSONObject json_meta = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(json_meta.get(CODE))
@@ -76,7 +76,7 @@ public class PostTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
@@ -99,7 +99,7 @@ public class PostTests {
 
         post.verifyPosts(post.returnPostFromResponse(response), post);
 
-        JSONObject json_meta = Utils.jsonObjectMeta(response);
+        JSONObject json_meta = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(json_meta.get(CODE))
@@ -120,7 +120,7 @@ public class PostTests {
                 .as(WRONG_RESPONSE_CODE)
                 .isEqualTo(StatusCodes.OK.getCode());
 
-        JSONObject jsonObject = Utils.jsonObjectMeta(response);
+        JSONObject jsonObject = JsonObject.jsonObjectMeta(response);
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jsonObject.get(CODE))
