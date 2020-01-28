@@ -1,9 +1,10 @@
-package gorest.co.in.utils;
+package webservices.utils;
 
 import io.restassured.response.Response;
 import org.json.JSONObject;
 
-import static gorest.co.in.constants.BaseResponse.*;
+import static gorest.co.in.constants.BaseResponse.META;
+import static gorest.co.in.constants.BaseResponse.RESULT;
 
 public class JsonObject {
     public static JSONObject jsonObject(Response response) {

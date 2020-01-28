@@ -6,6 +6,7 @@ import gorest.co.in.users.UserRequest;
 import gorest.co.in.users.User;
 import gorest.co.in.utils.Log;
 import gorest.co.in.utils.JsonObject;
+import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
@@ -37,8 +38,8 @@ public class Photo {
         return new Photo.Builder()
                 .setAlbumId(albumId)
                 .setTitle("new photo title")
-                .setUrl(new JsonObject().randomUrl)
-                .setThumbnail(new JsonObject().randomUrl)
+                .setUrl(new Utils().randomUrl)
+                .setThumbnail(new Utils().randomUrl)
                 .build();
     }
 

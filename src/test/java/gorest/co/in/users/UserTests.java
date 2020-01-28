@@ -3,6 +3,7 @@ package gorest.co.in.users;
 import gorest.co.in.constants.StatusCodes;
 import gorest.co.in.utils.Log;
 import gorest.co.in.utils.JsonObject;
+import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -70,7 +71,7 @@ public class UserTests {
 
     @Test
     public void updateRandomlyCreatedUser() {
-        user.setEmail(new JsonObject().randomEmail);
+        user.setEmail(new Utils().randomEmail);
 
         Response response = patchUserRequest(user);
         Log.info(response);

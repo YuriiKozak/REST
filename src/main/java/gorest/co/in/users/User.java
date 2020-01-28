@@ -1,7 +1,7 @@
 package gorest.co.in.users;
 
-import gorest.co.in.utils.JsonObject;
 import gorest.co.in.utils.Log;
+import gorest.co.in.utils.Utils;
 
 public class User {
     private String website;
@@ -29,7 +29,7 @@ public class User {
                 .setDob("1988-06-03")
                 .setLastName("Doe")
                 .setFirstName("John")
-                .setEmail(new JsonObject().randomEmail)
+                .setEmail(new Utils().randomEmail)
                 .setStatus("active")
                 .setLinks(new Links(new Edit(), new Self(),
                         new Avatar("https://gorest.co.in/avatar")))

@@ -6,6 +6,7 @@ import gorest.co.in.users.User;
 import gorest.co.in.users.UserRequest;
 import gorest.co.in.utils.Log;
 import gorest.co.in.utils.JsonObject;
+import gorest.co.in.utils.Utils;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
@@ -38,7 +39,7 @@ public class Comment {
         return new Comment.Builder()
                 .setPostId(postId)
                 .setName("new comment name")
-                .setEmail(new JsonObject().randomEmail)
+                .setEmail(new Utils().randomEmail)
                 .setBody("new comment body")
                 .build();
     }
