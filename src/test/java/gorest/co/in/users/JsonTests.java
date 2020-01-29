@@ -1,9 +1,7 @@
 package gorest.co.in.users;
 
 import com.google.gson.Gson;
-import gorest.co.in.utils.JsonToMap;
-import gorest.co.in.utils.Log;
-import gorest.co.in.utils.JsonObject;
+import gorest.co.in.utils.*;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.annotations.Test;

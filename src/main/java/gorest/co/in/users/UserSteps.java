@@ -1,7 +1,6 @@
 package gorest.co.in.users;
 
-import gorest.co.in.utils.JsonObject;
-import io.qameta.allure.Step;
+import gorest.co.in.utils.*;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
@@ -10,8 +9,8 @@ import static gorest.co.in.users.UserResponse.*;
 import static gorest.co.in.users.UserRequest.*;
 
 public class UserSteps extends User {
-    @Step("Return User From Response.")
     public static User returnUserFromResponse(Response response) {
+        Log.info("Return User From Response.");
         JSONObject jsonResult = JsonObject.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
         JSONObject jsonLinks = jsonResult.getJSONObject(LINKS);
 
@@ -32,8 +31,8 @@ public class UserSteps extends User {
                 .build();
     }
 
-    @Step("Verify Users.")
     public static void verifyUsers(User actualUser, User expectedUser) {
+        Log.info("Verify Users.");
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(actualUser.getWebsite())
                 .as("Website is incorrect.")

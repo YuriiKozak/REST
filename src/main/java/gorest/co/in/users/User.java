@@ -1,7 +1,6 @@
 package gorest.co.in.users;
 
-import gorest.co.in.utils.Log;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.*;
 
 public class User {
     private String website;

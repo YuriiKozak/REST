@@ -1,7 +1,6 @@
 package gorest.co.in.utils;
 
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import org.testng.*;
 
 public class Listener implements ITestListener {
     @Override

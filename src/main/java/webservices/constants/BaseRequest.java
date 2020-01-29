@@ -4,7 +4,6 @@ public interface BaseRequest {
     String GET = "GET";
     String POST = "POST";
     String PUT = "PUT";
-    String PATCH = "PATCH";
     String DELETE = "DELETE";
 
     String ID = "id";

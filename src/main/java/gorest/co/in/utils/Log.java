@@ -1,8 +1,7 @@
 package gorest.co.in.utils;
 
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.json.JSONObject;
 
 public class Log {

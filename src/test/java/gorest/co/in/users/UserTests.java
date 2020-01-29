@@ -1,12 +1,9 @@
 package gorest.co.in.users;
 
 import gorest.co.in.constants.StatusCodes;
-import gorest.co.in.utils.Log;
-import gorest.co.in.utils.JsonObject;
-import gorest.co.in.utils.Utils;
+import gorest.co.in.utils.*;
 import io.restassured.response.Response;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.api.*;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 

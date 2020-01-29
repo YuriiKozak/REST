@@ -1,17 +1,16 @@
 package webservices.members;
 
-import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.json.JSONObject;
-import webservices.utils.JsonObject;
+import webservices.utils.*;
 
 import static webservices.members.MemberRequest.*;
 import static webservices.members.MemberResponse.*;
 
 public class MemberSteps extends Member {
-    @Step("Return Member From Response.")
     public static Member returnMemberFromResponse(Response response) {
+        Log.info("Return Member From Response.");
         JSONObject jsonResult = JsonObject.jsonObject(response).getJSONArray(RESULT).getJSONObject(0);
 
         return new Builder()
@@ -20,8 +19,8 @@ public class MemberSteps extends Member {
                 .build();
     }
 
-    @Step("Verify Members.")
     public static void verifyMembers(Member actualMember, Member expectedMember) {
+        Log.info("Verify Members.");
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(actualMember.getId())
                 .as("Id is incorrect.")

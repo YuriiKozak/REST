@@ -1,7 +1,6 @@
 package webservices.constants;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public interface RequestHeaders {
     static Map<String, String> getHeaders() {

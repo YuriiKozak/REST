@@ -35,7 +35,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src\test\testSuites\TestSuite.xml</suiteXmlFile>
+                        <suiteXmlFile>src\test\testSuites\WebServicesTests.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
                 <dependencies>

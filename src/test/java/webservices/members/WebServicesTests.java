@@ -9,7 +9,7 @@ import static webservices.members.MemberRequest.*;
 
 public class WebServicesTests {
     @Test
-    public void getMembers() {
+    public void membersTest() {
         Response getResponse = getMembersRequest();
         String getResponseString = getResponse.getBody().asString();
         Log.info(getResponseString);

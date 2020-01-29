@@ -4,16 +4,6 @@
     <listeners>
         <listener class-name="gorest.co.in.utils.Listener"/>
     </listeners>
-    <test name="WebServicesTests">
-        <classes>
-            <class name="webservices.members.WebServicesTests"/>
-        </classes>
-    </test>
-    <test name="JsonTests">
-        <classes>
-            <class name="gorest.co.in.users.JsonTests"/>
-        </classes>
-    </test>
     <test name="UserTests">
         <classes>
             <class name="gorest.co.in.users.UserTests">

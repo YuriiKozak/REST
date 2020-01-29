@@ -1,8 +1,6 @@
 package gorest.co.in.users;
 
-import gorest.co.in.constants.BaseRequest;
-import gorest.co.in.constants.BaseUrls;
-import gorest.co.in.constants.RequestHeaders;
+import gorest.co.in.constants.*;
 import gorest.co.in.utils.Log;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

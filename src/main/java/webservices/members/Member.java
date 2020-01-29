@@ -1,7 +1,6 @@
 package webservices.members;
 
-import webservices.utils.Log;
-import webservices.utils.Utils;
+import webservices.utils.*;
 
 public class Member {
     private String id;

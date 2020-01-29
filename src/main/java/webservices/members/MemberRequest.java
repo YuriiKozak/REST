@@ -4,9 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
-import webservices.constants.BaseRequest;
-import webservices.constants.BaseUrls;
-import webservices.constants.RequestHeaders;
+import webservices.constants.*;
 import webservices.utils.Log;
 
 import java.util.HashMap;
