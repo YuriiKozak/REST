@@ -73,18 +73,15 @@ public class PostRequest implements RequestHeaders, BaseRequest, BaseUrls {
         setBody(post.getBody());
     }
 
-    public PostRequest setUserId(String userId) {
+    public void setUserId(String userId) {
         requestParams.put(USER_ID, userId);
-        return this;
     }
 
-    public PostRequest setTitle(String title) {
+    public void setTitle(String title) {
         requestParams.put(TITLE, title);
-        return this;
     }
 
-    public PostRequest setBody(String body) {
+    public void setBody(String body) {
         requestParams.put(BODY, body);
-        return this;
     }
 }

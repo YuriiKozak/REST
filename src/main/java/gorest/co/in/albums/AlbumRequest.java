@@ -71,13 +71,11 @@ public class AlbumRequest implements RequestHeaders, BaseRequest, BaseUrls {
         setTitle(album.getTitle());
     }
 
-    public AlbumRequest setUserId(String userId) {
+    public void setUserId(String userId) {
         requestParams.put(USER_ID, userId);
-        return this;
     }
 
-    public AlbumRequest setTitle(String title) {
+    public void setTitle(String title) {
         requestParams.put(TITLE, title);
-        return this;
     }
 }

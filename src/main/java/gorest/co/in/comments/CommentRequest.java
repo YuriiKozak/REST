@@ -75,23 +75,19 @@ public class CommentRequest implements RequestHeaders, BaseRequest, BaseUrls {
         setBody(comment.getBody());
     }
 
-    public CommentRequest setPostId(String postId) {
+    public void setPostId(String postId) {
         requestParams.put(POST_ID, postId);
-        return this;
     }
 
-    public CommentRequest setName(String name) {
+    public void setName(String name) {
         requestParams.put(NAME, name);
-        return this;
     }
 
-    public CommentRequest setEmail(String email) {
+    public void setEmail(String email) {
         requestParams.put(EMAIL, email);
-        return this;
     }
 
-    public CommentRequest setBody(String body) {
+    public void setBody(String body) {
         requestParams.put(BODY, body);
-        return this;
     }
 }

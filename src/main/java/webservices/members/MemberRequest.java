@@ -38,22 +38,24 @@ public class MemberRequest implements RequestHeaders, BaseRequest, BaseUrls {
         return request.post();
     }
 
-    public static Response patchUserRequest(Member user) {
-        Log.info(String.format(SENDING_REQUEST, PATCH));
+    public static Response putMemberRequest(Member member) {
+        Log.info(String.format(SENDING_REQUEST, PUT));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());
-        MemberRequest userRequest = new MemberRequest(user);
-        request.body(userRequest.getRequestBody());
-        return request.patch(user.getFullName());
+        MemberRequest memberRequest = new MemberRequest(member);
+        request.body(memberRequest.getRequestBody());
+        return request.put();
     }
 
-    public static Response deleteUserRequest(Member user) {
+    public static Response deleteMemberRequest(Member member) {
         Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
         request.headers(RequestHeaders.getHeaders());
-        return request.delete(user.getFullName());
+        MemberRequest memberRequest = new MemberRequest(member);
+        request.body(memberRequest.getRequestBody());
+        return request.delete();
     }
 
     private Map<String, String> requestParams = new HashMap<>();
@@ -63,11 +65,15 @@ public class MemberRequest implements RequestHeaders, BaseRequest, BaseUrls {
     }
 
     public MemberRequest(Member member) {
+        setId(member.getId());
         setFullName(member.getFullName());
     }
 
-    public MemberRequest setFullName(String fullName) {
+    public void setId(String id) {
+        requestParams.put(ID, id);
+    }
+
+    public void setFullName(String fullName) {
         requestParams.put(FULL_NAME, fullName);
-        return this;
     }
 }

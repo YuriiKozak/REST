@@ -100,53 +100,43 @@ public class UserRequest implements RequestHeaders, BaseRequest, BaseUrls {
         setAvatar(user.getLinks().getAvatar().getHref());
     }
 
-    public UserRequest setWebsite(String website) {
+    public void setWebsite(String website) {
         requestParams.put(WEBSITE, website);
-        return this;
     }
 
-    public UserRequest setAddress(String address) {
+    public void setAddress(String address) {
         requestParams.put(ADDRESS, address);
-        return this;
     }
 
-    public UserRequest setGender(String gender) {
+    public void setGender(String gender) {
         requestParams.put(GENDER, gender);
-        return this;
     }
 
-    public UserRequest setPhone(String phone) {
+    public void setPhone(String phone) {
         requestParams.put(PHONE, phone);
-        return this;
     }
 
-    public UserRequest setDob(String dob) {
+    public void setDob(String dob) {
         requestParams.put(DOB, dob);
-        return this;
     }
 
-    public UserRequest setLastName(String lastName) {
+    public void setLastName(String lastName) {
         requestParams.put(LAST_NAME, lastName);
-        return this;
     }
 
-    public UserRequest setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         requestParams.put(FIRST_NAME, firstName);
-        return this;
     }
 
-    public UserRequest setEmail(String email) {
+    public void setEmail(String email) {
         requestParams.put(EMAIL, email);
-        return this;
     }
 
-    public UserRequest setStatus(String status) {
+    public void setStatus(String status) {
         requestParams.put(STATUS, status);
-        return this;
     }
 
-    public UserRequest setAvatar(String avatar) {
+    public void setAvatar(String avatar) {
         requestParams.put(AVATAR, avatar);
-        return this;
     }
 }

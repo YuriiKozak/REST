@@ -75,23 +75,19 @@ public class PhotoRequest implements RequestHeaders, BaseRequest, BaseUrls {
         setThumbnail(photo.getThumbnail());
     }
 
-    public PhotoRequest setAlbumId(String albumId) {
+    public void setAlbumId(String albumId) {
         requestParams.put(ALBUM_ID, albumId);
-        return this;
     }
 
-    public PhotoRequest setTitle(String title) {
+    public void setTitle(String title) {
         requestParams.put(TITLE, title);
-        return this;
     }
 
-    public PhotoRequest setUrl(String url) {
+    public void setUrl(String url) {
         requestParams.put(URL, url);
-        return this;
     }
 
-    public PhotoRequest setThumbnail(String thumbnail) {
+    public void setThumbnail(String thumbnail) {
         requestParams.put(THUMBNAIL, thumbnail);
-        return this;
     }
 }
