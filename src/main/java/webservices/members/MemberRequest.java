@@ -7,8 +7,7 @@ import org.json.JSONObject;
 import webservices.constants.*;
 import webservices.utils.Log;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static webservices.constants.LogMessages.SENDING_REQUEST;
 
@@ -30,7 +29,7 @@ public class MemberRequest implements RequestHeaders, BaseRequest, BaseUrls {
         Log.info(String.format(SENDING_REQUEST, POST));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeaders.getHeaders());
+//        request.headers(RequestHeaders.getHeaders());
         MemberRequest memberRequest = new MemberRequest(member);
         request.body(memberRequest.getRequestBody());
         return request.post();
@@ -40,7 +39,7 @@ public class MemberRequest implements RequestHeaders, BaseRequest, BaseUrls {
         Log.info(String.format(SENDING_REQUEST, PUT));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeaders.getHeaders());
+//        request.headers(RequestHeaders.getHeaders());
         MemberRequest memberRequest = new MemberRequest(member);
         request.body(memberRequest.getRequestBody());
         return request.put();
@@ -50,7 +49,7 @@ public class MemberRequest implements RequestHeaders, BaseRequest, BaseUrls {
         Log.info(String.format(SENDING_REQUEST, DELETE));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-        request.headers(RequestHeaders.getHeaders());
+//        request.headers(RequestHeaders.getHeaders());
         MemberRequest memberRequest = new MemberRequest(member);
         request.body(memberRequest.getRequestBody());
         return request.delete();

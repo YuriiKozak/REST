@@ -1,9 +1,8 @@
 package webservices.members;
 
-import webservices.utils.Log;
+import webservices.utils.*;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
-import webservices.utils.Utils;
 
 import static webservices.members.MemberRequest.*;
 
@@ -23,7 +22,7 @@ public class WebServicesTests {
         Log.info(getResponseString2);
 
         Response putResponse = putMemberRequest(new Member.
-                Builder().setId("2").setFullName(new Utils().randomFullName).build());
+                Builder().setId("1").setFullName(new Utils().randomFullName).build());
         String putResponseString = putResponse.getBody().asString();
         Log.info(putResponseString);
 
