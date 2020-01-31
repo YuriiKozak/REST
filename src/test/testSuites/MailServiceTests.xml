@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="MailServiceTests" parallel="tests" thread-count="1">
+    <listeners>
+        <listener class-name="mailservice.utils.Listener"/>
+    </listeners>
+    <test name="MailServiceTests">
+        <classes>
+            <class name="mailservice.mails.MailServiceTests"/>
+        </classes>
+    </test>
+</suite>

@@ -1,9 +1,9 @@
-package webservices.utils;
+package mailservice.utils;
 
 import io.restassured.response.Response;
 import org.json.JSONObject;
 
-import static webservices.constants.BaseResponse.*;
+import static mailservice.constants.BaseResponse.*;
 
 public class JsonObject {
     public static JSONObject jsonObject(Response response) {
