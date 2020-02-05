@@ -20,5 +20,13 @@ public class MailServiceTests {
         Response getResponse2 = getMailsRequest();
         String getResponseString2 = getResponse2.getBody().asString();
         Log.info(getResponseString2);
+
+        Response deleteResponse = deleteMailRequest(new Mail.Builder().setId("19").build());
+        String deleteResponseString = deleteResponse.getBody().asString();
+        Log.info(deleteResponseString);
+
+        Response getResponse3 = getMailsRequest();
+        String getResponseString3 = getResponse3.getBody().asString();
+        Log.info(getResponseString3);
     }
 }
