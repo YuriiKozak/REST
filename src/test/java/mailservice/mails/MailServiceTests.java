@@ -13,15 +13,16 @@ public class MailServiceTests {
         String getResponseString = getResponse.getBody().asString();
         Log.info(getResponseString);
 
-        Response postResponse = postMailRequest(new Mail().createRandomMail());
+        Mail mail = new Mail().createRandomMail();
+        Response postResponse = postMailRequest(mail);
         String postResponseString = postResponse.getBody().asString();
         Log.info(postResponseString);
 
-        Response getResponse2 = getMailsRequest();
+        Response getResponse2 = getMailsRequest(mail);
         String getResponseString2 = getResponse2.getBody().asString();
         Log.info(getResponseString2);
 
-        Response deleteResponse = deleteMailRequest(new Mail.Builder().setId("19").build());
+        Response deleteResponse = deleteMailRequest(mail);
         String deleteResponseString = deleteResponse.getBody().asString();
         Log.info(deleteResponseString);
 
