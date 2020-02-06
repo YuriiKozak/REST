@@ -22,12 +22,16 @@ public class MailServiceTests {
         String getResponseString2 = getResponse2.getBody().asString();
         Log.info(getResponseString2);
 
+        Response getResponse3 = getMailsRequest();
+        String getResponseString3 = getResponse3.getBody().asString();
+        Log.info(getResponseString3);
+
         Response deleteResponse = deleteMailRequest(mail);
         String deleteResponseString = deleteResponse.getBody().asString();
         Log.info(deleteResponseString);
 
-        Response getResponse3 = getMailsRequest();
-        String getResponseString3 = getResponse3.getBody().asString();
-        Log.info(getResponseString3);
+        Response getResponse4 = getMailsRequest();
+        String getResponseString4 = getResponse4.getBody().asString();
+        Log.info(getResponseString4);
     }
 }
