@@ -18,20 +18,24 @@ public class MailServiceTests {
         String postResponseString = postResponse.getBody().asString();
         Log.info(postResponseString);
 
-        Response getResponse2 = getMailsRequest(mail);
+        Response getResponse2 = getMailsRequest(SUBJECT, mail.getSubject());
         String getResponseString2 = getResponse2.getBody().asString();
         Log.info(getResponseString2);
 
-        Response getResponse3 = getMailsRequest();
+        Response getResponse3 = getMailsRequest(EMAIL, mail.getEmail());
         String getResponseString3 = getResponse3.getBody().asString();
         Log.info(getResponseString3);
+
+        Response getResponse4 = getMailsRequest();
+        String getResponseString4 = getResponse4.getBody().asString();
+        Log.info(getResponseString4);
 
         Response deleteResponse = deleteMailRequest(mail);
         String deleteResponseString = deleteResponse.getBody().asString();
         Log.info(deleteResponseString);
 
-        Response getResponse4 = getMailsRequest();
-        String getResponseString4 = getResponse4.getBody().asString();
-        Log.info(getResponseString4);
+        Response getResponse5 = getMailsRequest();
+        String getResponseString5 = getResponse5.getBody().asString();
+        Log.info(getResponseString5);
     }
 }

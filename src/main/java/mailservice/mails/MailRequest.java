@@ -27,14 +27,11 @@ public class MailRequest implements RequestHeaders, BaseRequest, BaseUrls {
         return request.get();
     }
 
-    public static Response getMailsRequest(Mail mail) {
+    public static Response getMailsRequest(String paramName, String paramValue) {
         Log.info(String.format(SENDING_REQUEST, GET));
         setBaseURI();
         RequestSpecification request = RestAssured.given();
-//        request.headers(RequestHeaders.getHeaders());
-        MailRequest mailRequest = new MailRequest(mail);
-        request.body(mailRequest.getRequestBody());
-        return request.get();
+        return request.queryParam(paramName, paramValue).get();
     }
 
     public static Response postMailRequest(Mail mail) {
