@@ -3,7 +3,7 @@ package mailservice.utils;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 
-import static mailservice.constants.BaseResponse.*;
+import static mailservice.constants.IBaseResponse.*;
 
 public class JsonObject {
     public static JSONObject jsonObject(Response response) {

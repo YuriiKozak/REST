@@ -1,6 +1,6 @@
 package mailservice.constants;
 
-public interface BaseResponse {
+public interface IBaseResponse {
     String RESULT = "result";
     String META = "_meta";
     String CODE = "code";

@@ -1,6 +1,6 @@
 package mailservice.mails;
 
-import mailservice.constants.BaseResponse;
+import mailservice.constants.IBaseResponse;
 
-public class MailResponse implements BaseResponse {
+public class MailResponse implements IBaseResponse {
 }

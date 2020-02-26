@@ -1,6 +1,6 @@
 package mailservice.constants;
 
-public interface BaseRequest {
+public interface IBaseRequest {
     String GET = "GET";
     String POST = "POST";
     String PUT = "PUT";

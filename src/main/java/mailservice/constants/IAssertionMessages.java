@@ -1,6 +1,6 @@
 package mailservice.constants;
 
-public interface AssertionMessages {
+public interface IAssertionMessages {
     String WRONG_RESPONSE_CODE = "Wrong response code.";
     String WRONG_RESPONSE_MESSAGE = "Wrong response message.";
 

@@ -9,9 +9,9 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-import static mailservice.constants.LogMessages.*;
+import static mailservice.constants.ILogMessages.*;
 
-public class MailRequest implements RequestHeaders, BaseRequest, BaseUrls {
+public class MailRequest implements IRequestHeaders, IBaseRequest, IBaseUrls {
     public static final String SUBJECT = "subject";
     public static final String EMAIL = "email";
     public static final String BODY = "body";
