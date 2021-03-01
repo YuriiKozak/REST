@@ -7,6 +7,7 @@ public class Member {
     private String full_name;
 
     public Member() {
+        super();
     }
 
     public Member createRandomMember() {
